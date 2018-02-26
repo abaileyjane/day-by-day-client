@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+import {NavBarLoggedIn} from './components/navbar-logged-in.js';
+import {NavBarLoggedOut} from './components/navbar-logged-out.js';
+import {Page} from './components/page.js'
+import './App.css';
+
+ReactDOM.render(
+  <Page />,
+  
+  document.getElementById('root')
+  );
+ 
