@@ -1,4 +1,5 @@
 .navbar{
-	display: inline;
-	background-color: blue
+	background-color: blue;
+
+	display:inline-block;
 }

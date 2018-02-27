@@ -1,13 +1,14 @@
 import React from 'react';
+import  {Checkbox, bsSize, FormControl} from 'react-bootstrap'
 
 export function Habit(props){
 
 	return (
 		<div className="radio">
-			<label>
-				<input className='habit' type="radio" id={props.habit} checked={props.completed}/>
-			 	{props.habit}
-			 </label>
+			
+			<Checkbox  checked={props.completed}>
+				{props.habit}
+			</Checkbox>
 		</div>
 	)
 }

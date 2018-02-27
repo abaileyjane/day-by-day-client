@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "chart.js": "^2.7.1",
+    "grunt-cli": "^1.2.0",
     "react": "^16.2.0",
+    "react-bootstrap": "^0.32.1",
     "react-day-picker": "^7.0.7",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",

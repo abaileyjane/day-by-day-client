@@ -1,0 +1,19 @@
+import React from 'react';
+
+import '../../bootstrap.css'
+import '../../one-page-wonder.css'
+
+import {NavbarLoggedIn} from './navbar-logged-in.js';
+
+
+export function ChartsPage(props){
+
+return(
+	<div className="ChartsPage">
+		<NavBarLoggedIn firstName='userFirstName' />
+		{' '}
+		
+	</div>
+	)
+	
+}
