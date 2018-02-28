@@ -1,9 +1,7 @@
 import React from 'react';
 
-import '../../bootstrap.css'
-import '../../one-page-wonder.css'
 
-import {NavbarLoggedIn} from './navbar-logged-in.js';
+import {NavBarLoggedIn} from '../navbar-logged-in.js';
 
 
 export function ChartsPage(props){

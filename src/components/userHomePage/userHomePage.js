@@ -3,21 +3,29 @@ import{ NavBarLoggedIn} from '../navbar-logged-in.js';
 import{AddNewHabitForm} from './add-new-habit-form.js';
 import {HabitChecklistForm} from './habit-checklist-form.js'
 import {Date} from './date-picker.js'
-import {UserSignupForm} from '../user-registration.js'
+import {UserSignupForm} from '../landingPage/user-registration.js'
 import '../../bootstrap.css'
-import '../../one-page-wonder.css'
+import {addHabit} from '../../actions'
+import {connect} from 'react-redux';
 
-export function UserHomePage(props){
 
+export class UserHomePage extends React.Component{
+ render(){
 return(
 	<div className="Homepage">
-		<NavBarLoggedIn firstName='userFirstName' />
+		<NavBarLoggedIn firstName={this.props.firstName} />
 		{' '}
 		<Date />
 		<HabitChecklistForm />
-		<AddNewHabitForm />
+		<AddNewHabitForm addHabit={e=> this.props.dispatch(addHabit(e))}/>
 		<UserSignupForm />
 	</div>
 	)
-	
+	}
 }
+
+const mapStateToProps = (state,props) => ({
+	firstName: state.firstName
+})
+
+export default connect(mapStateToProps)(UserHomePage)

@@ -1,5 +1,6 @@
 import React from 'react';
-import {FormControl, Form, FormGroup, ControlLabel, Button} from 'react-bootstrap';
+import { FormControl, Form, FormGroup, ControlLabel, Button} from 'react-bootstrap';
+
 
 
 export class UserSigninForm extends React.Component {
@@ -47,11 +48,10 @@ export class UserSigninForm extends React.Component {
           		controlId="email"
           		validationState={this.getEmailValidationState()}
         	>
-          	<ControlLabel>Email</ControlLabel>{' '}
           	<FormControl
 	            type="text"
 	            value={this.state.emailValue}
-	            placeholder="me@someurl.com"
+	            placeholder="Email"
 	            onChange={this.handleEmailChange}
 	          />
          	 <FormControl.Feedback />
@@ -62,7 +62,6 @@ export class UserSigninForm extends React.Component {
           validationState={this.getPasswordValidationState()}
            type="password"
         >
-          <ControlLabel>Password</ControlLabel>{' '}
           <FormControl
             type="password"
             value={this.state.passwordValue}
@@ -70,7 +69,10 @@ export class UserSigninForm extends React.Component {
             onChange={this.handlePasswordChange}
           />
           <FormControl.Feedback />
-        </FormGroup>
+        </FormGroup>  {' '} 
+        <Button bsStyle="primary" bsSize="small" >
+            Go!
+        </Button>
 
 	</Form>
 )}}

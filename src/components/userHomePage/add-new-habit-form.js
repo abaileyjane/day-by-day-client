@@ -8,26 +8,36 @@ export class AddNewHabitForm extends React.Component {
     super(props, context);
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
       value: ''
     };
   }
 
+
   getValidationState() {
     const length = this.state.value.length;
+  
     if (length > 1) return 'success';
-    else if (length === 0) return 'error';
     return null;
   }
 
   handleChange(e) {
     this.setState({ value: e.target.value });
+    console.log(this.state.value)
+  }
+
+  handleSubmit(e){
+    e.preventDefault();
+    console.log(this.state.value);
+    this.props.addHabit(this.state.value);
+    this.setState({value: ""})
   }
 
   render() {
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <FormGroup
           controlId="newHabitForm"
           validationState={this.getValidationState()}

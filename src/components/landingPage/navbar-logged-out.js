@@ -1,21 +1,11 @@
 import React from 'react';
-import {Nav, Header, Navbar, Brand, Toggle, Collapse, NavItem} from 'react-bootstrap';
+import {Nav, Navbar, NavItem} from 'react-bootstrap';
 
-import './navbar.css';
-import {Logo} from './logo.js';
+
+import '../navbar.css';
 import {UserSigninForm} from './user-login.js'
 export function NavBarLoggedOut (props){
-// 	return(
-// 		<div className='navbar'>
-// 			<div className='nav-bar-left'>
-// 				<Logo />
-// 			</div>
-// 			<div className='nav-bar-right'>
-// 				<UserLogin />
-// 			</div>
 
-// 		</div>)
-// }
 return (
 <Navbar inverse collapseOnSelect fixedTop fluid>
   <Navbar.Header>
@@ -27,6 +17,9 @@ return (
   <Navbar.Collapse>
  
     <Nav pullRight>
+      <NavItem>
+        <h2>Sign In</h2>
+      </NavItem>
       <NavItem eventKey={1} href="#">
         <UserSigninForm />
       </NavItem>

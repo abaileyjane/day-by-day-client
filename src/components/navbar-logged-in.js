@@ -2,7 +2,7 @@ import React from 'react';
 
 import './navbar.css';
 import {Logo} from './logo.js';
-import {Nav, Header, Navbar, Brand, Toggle, Collapse, NavItem} from 'react-bootstrap';
+import {Nav, Navbar, NavItem} from 'react-bootstrap';
 
 
 export function NavBarLoggedIn(props){

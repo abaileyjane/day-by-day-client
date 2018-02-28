@@ -2,6 +2,8 @@ import React from 'react';
 import {FormControl, FormGroup, ControlLabel, Button} from 'react-bootstrap';
 
 
+
+
 export class UserSignupForm extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -131,7 +133,7 @@ export class UserSignupForm extends React.Component {
           validationState={this.getPasswordValidationState()}
             type='password'
         >
-          <ControlLabel>password</ControlLabel>
+          <ControlLabel>Password</ControlLabel>
           <FormControl
             type="password"
             value={this.state.passwordValue}
@@ -146,7 +148,7 @@ export class UserSignupForm extends React.Component {
           validationState={this.getRepeatPasswordValidationState()}
             type='password'
         >
-          <ControlLabel>repeatPassword</ControlLabel>
+          <ControlLabel>Confirm Password</ControlLabel>
           <FormControl
             type="password"
             value={this.state.repeatPasswordValue}
