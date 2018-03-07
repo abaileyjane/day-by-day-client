@@ -4,7 +4,7 @@ import {Nav, Navbar, NavItem} from 'react-bootstrap';
 
 import '../navbar.css';
 import {UserSigninForm} from './user-login.js'
-export function NavBarLoggedOut (props){
+export default function NavBarLoggedOut (props){
 
 return (
 <Navbar inverse collapseOnSelect fixedTop fluid>

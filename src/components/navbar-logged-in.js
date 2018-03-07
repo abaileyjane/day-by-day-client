@@ -5,7 +5,7 @@ import {Logo} from './logo.js';
 import {Nav, Navbar, NavItem} from 'react-bootstrap';
 
 
-export function NavBarLoggedIn(props){
+export default function NavBarLoggedIn(props){
 	
 	return (
 

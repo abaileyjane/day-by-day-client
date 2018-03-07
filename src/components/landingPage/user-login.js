@@ -1,5 +1,7 @@
 import React from 'react';
 import { FormControl, Form, FormGroup, ControlLabel, Button} from 'react-bootstrap';
+import {login} from '../../actions/auth';
+import {Field, reduxForm, focus} from 'redux-form';
 
 
 
@@ -17,6 +19,10 @@ export class UserSigninForm extends React.Component {
     };
   }
 
+  onSubmit(values) {
+        return this.props.dispatch(login(this.state.emailValue, this.state.passwordValue));
+    }
+
   getEmailValidationState() {
      const length = this.state.emailValue.length;
 
@@ -29,7 +35,7 @@ export class UserSigninForm extends React.Component {
     getPasswordValidationState() {
     const length = this.state.passwordValue.length;
     if (length > 1) return 'success';
-    else if (length === 0) return 'null';
+    else if (length === 0) return null;
     return null;
   }
 
@@ -43,7 +49,8 @@ export class UserSigninForm extends React.Component {
 
   render(){
 	return (
-		<Form inline>
+		<Form inline  onSubmit={values =>
+                    this.onSubmit(values)}>
 			<FormGroup
           		controlId="email"
           		validationState={this.getEmailValidationState()}
@@ -76,3 +83,8 @@ export class UserSigninForm extends React.Component {
 
 	</Form>
 )}}
+
+export default reduxForm({
+    form: 'login',
+    onSubmitFail: (errors, dispatch) => dispatch(focus('login', 'email'))
+})(UserSigninForm);

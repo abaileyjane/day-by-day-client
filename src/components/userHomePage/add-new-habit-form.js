@@ -3,7 +3,7 @@ import {FormControl, FormGroup, ControlLabel, Button} from 'react-bootstrap';
  
 import '../../bootstrap.css'
 
-export class AddNewHabitForm extends React.Component {
+export default class AddNewHabitForm extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -50,7 +50,7 @@ export class AddNewHabitForm extends React.Component {
             onChange={this.handleChange}
           />
           <FormControl.Feedback />
-          <Button bsStyle="primary" bsSize="large" >
+          <Button type="submit" bsStyle="primary" bsSize="large" >
             Start Tracking
           </Button>
         </FormGroup>

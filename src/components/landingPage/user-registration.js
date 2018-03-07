@@ -1,10 +1,11 @@
 import React from 'react';
 import {FormControl, FormGroup, ControlLabel, Button} from 'react-bootstrap';
 
+import {registerUser} from '../../actions/users';
+import {login} from '../../actions/auth'
 
 
-
-export class UserSignupForm extends React.Component {
+export default class UserSignupForm extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -83,9 +84,17 @@ export class UserSignupForm extends React.Component {
     this.setState({ repeatPasswordValue: e.target.value });
   }
 
+  onSubmit(values) {
+        const {email, password, firstName, lastName} = values;
+        const user = {email, password, firstName, lastName};
+        return this.props
+            .dispatch(registerUser(user))
+            .then(() => this.props.dispatch(login(email, password)));
+    }
+
   render() {
     return (
-      <form>
+      <form onSubmit={this.props.handleSubmit}>
         <FormGroup
           controlId="firstName"
           validationState={this.getFNameValidationState()}
@@ -157,7 +166,7 @@ export class UserSignupForm extends React.Component {
           />
           <FormControl.Feedback />
         </FormGroup>
-        <Button bsStyle="primary" bsSize="large" >
+        <Button type='submit' bsStyle="primary" bsSize="large" >
             Create Account
         </Button>
 
