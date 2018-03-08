@@ -3,8 +3,6 @@ import {FormControl, FormGroup, ControlLabel, Button} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux'
 
-import {registerUser} from '../../actions/users';
-import {login} from '../../actions/auth'
 
 
 
@@ -91,8 +89,8 @@ export  class UserSignupForm extends React.Component {
   onSubmit(event) {
         event.preventDefault();
         const user = {email:this.state.emailValue, password:this.state.passwordValue, firstName:this.state.fNameValue, lastName: this.state.lNameValue};
-        this.props.dispatch(registerUser(user))
-            .then(() => this.props.dispatch(login(this.state.emailValue, this.state.passwordValue)));
+        // this.props.dispatch(registerUser(user))
+        //     .then(() => this.props.dispatch(login(this.state.emailValue, this.state.passwordValue)));
     }
 
   render() {

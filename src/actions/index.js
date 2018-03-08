@@ -30,3 +30,48 @@ export const changeChecked= title => ({
 	type: CHANGE_CHECKED,
 	title
 })
+
+export const fetchUser = () => dispatch => {
+    fetch(`${API_BASE_URL}/users`).then(res => {
+        if (!res.ok) {
+            return Promise.reject(res.statusText);
+        }
+        return res.json();
+    }).then(user => {
+        dispatch(fetchUserSuccess(user));
+    });
+};
+
+export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
+export const fetchUSERSuccess = user => ({
+    type: FETCH_USER_SUCCESS,
+    user
+});
+
+export const saveUserInfo = (user) => dispatch => {
+    fetch(`${API_BASE_URL}/users`, {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    habits: user.habits,
+    dailyLog: user.dailyLog,
+  })
+}).then(res=>{
+	if (!res.ok) {
+            return Promise.reject(res.statusText);
+        }
+        return res.json();
+    }).then(user => {
+        dispatch(saveUserInfoSuccess(user));
+
+	})
+}
+
+export const SAVE_USER_INFO_SUCCESS = 'SAVE_USER_INFO_SUCCESS';
+export const fetchUSERSuccess = user => ({
+    type: FETCH_USER_SUCCESS,
+    user
+});

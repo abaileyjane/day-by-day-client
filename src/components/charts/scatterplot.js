@@ -121,7 +121,7 @@ generateDataPoints(){
       return this.setState({datasets:dataSetArray})
     }
 
-  componentWillMount(){
+  shouldComponentUpdate(nextProps, nextState){
         this.setBigState();
 
   }
@@ -159,7 +159,7 @@ const mapStateToProps = (state) => {
   {
   
   habits: state.index.habits,
-        dailyLog: state.index.dailyLog}
+  dailyLog: state.index.dailyLog}
   )}
 
 export default connect(mapStateToProps)(Scatterplot)

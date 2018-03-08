@@ -1,6 +1,5 @@
 import React from 'react';
 import { FormControl, Form, FormGroup, ControlLabel, Button} from 'react-bootstrap';
-import {login} from '../../actions/auth';
 import {Field, reduxForm, focus} from 'redux-form';
 
 
@@ -12,6 +11,8 @@ export class UserSigninForm extends React.Component {
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
 
     this.state = {
       emailValue:'',
@@ -19,10 +20,10 @@ export class UserSigninForm extends React.Component {
     };
   }
 
-  onSubmit(values) {
-        return this.props.dispatch(login(this.state.emailValue, this.state.passwordValue));
-    }
-
+  handleSubmit(e) {
+      e.preventDefault();
+        console.log('login submit ran')
+}
   getEmailValidationState() {
      const length = this.state.emailValue.length;
 
@@ -40,17 +41,20 @@ export class UserSigninForm extends React.Component {
   }
 
    handleEmailChange(e) {
-    this.setState({ emailValue: e.target.value });
+    this.setState({ emailValue: e.target.value })
+    console.log(this.state);
   }
 
    handlePasswordChange(e) {
     this.setState({ passwordValue: e.target.value });
+    console.log(this.state)
   }
 
   render(){
+    console.log(this.state)
 	return (
-		<Form inline  onSubmit={values =>
-                    this.onSubmit(values)}>
+
+		<Form inline onSubmit={this.handleSubmit}>
 			<FormGroup
           		controlId="email"
           		validationState={this.getEmailValidationState()}
@@ -77,7 +81,7 @@ export class UserSigninForm extends React.Component {
           />
           <FormControl.Feedback />
         </FormGroup>  {' '} 
-        <Button bsStyle="primary" bsSize="small" >
+        <Button type='submit' bsStyle="primary" bsSize="small" >
             Go!
         </Button>
 

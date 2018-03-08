@@ -2,53 +2,16 @@ import * as actions from '../actions';
 
 const initialState = {
 	selectedDate: Date(),
-	 id: "5a9605fcf914a53b8cd2ef50",
-     firstName: "ben",
-     lastName: "f",
-     email: "eyjane@gmail.com",
-     habits:[
-     	{
-     		title: "wash dishes",
-     		complete: false
-     	},
-     	{
-     		title: "clean room",
-     		complete:false
-     	},
-     	{
-     		title: 'do homework',
-     		complete:false
-     	}
-     ],
-     dailyLog: [
-     	{
-     		date: "2-17-1992",
-     		log:[
-     			{habit: "wash dishes",
-     			complete: false},
-     			{habit: "clean room",
-     			complete: true}
-     			]
-
-     	},
-     	{
-     		date: "2-18-1992",
-     		log:[
-     			{habit: "wash dishes",
-     			complete: false},
-     			{habit: "clean room",
-     			complete: true}
-     			]
-
-     	}
-     ]
+     habits:[],
+     dailyLog: []
 }
 
 const reducer = (state=initialState, action) =>{
 	switch (action.type){
 		case 'ADD_HABIT':return Object.assign({}, state, {
 			habits: [...state.habits, {
-				title: action.title
+				title: action.title,
+				complete: false
 			}]
 		})
 		case 'ADD_LOG_DATE': return Object.assign({}, state,{
@@ -89,7 +52,7 @@ const reducer = (state=initialState, action) =>{
 				})
 			}
 				
-				else {
+			else {
 					const arrayWithoutChangedHabit = state.habits.filter(function(el){
 					return el.title !== action.title
 					})
@@ -98,7 +61,19 @@ const reducer = (state=initialState, action) =>{
 						{title: action.title,
 							complete: true}]
 				})
-				}	
+				}
+		case 'FETCH_USER_SUCCESS': 	
+
+		
+			return Object.assign({}, state, {
+				habits: action.user.habits,
+				dailyLog: action.user.dailyLog
+			})
+
+		case 'SAVE_USER_INFO_SUCCESS':
+			//send user to charts page and clear checkboxes
+			
+
 		
 		default: return state;
 	}

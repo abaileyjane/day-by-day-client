@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link, Redirect} from 'react-router-dom';
-import {registerUser} from '../../actions/users';
 
 
 
@@ -19,7 +18,7 @@ export function LandingPage(props){
 		<div className="LandingPage">
 			<NavBarLoggedOut />
 			{' '}
-			<UserSignupForm onSubmit={e=> props.dispatch(registerUser(e))} />
+			<UserSignupForm onSubmit={console.log('submit')} />
 			{' '}
 			
 		</div>

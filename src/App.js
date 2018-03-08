@@ -4,58 +4,67 @@ import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import UserHomePage from './components/userHomePage/userHomePage.js';
 import {LandingPage} from './components/landingPage/landing-page.js';
 import ChartsPage from './components/charts/charts-page.js';
-import {refreshAuthToken} from './actions/auth';
 import { withRouter} from 'react-router-dom';
+import { Navbar, Button } from 'react-bootstrap';
+
+import Auth from './auth.js';
 
 
 
 export class App extends React.Component {
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.loggedIn && !this.props.loggedIn) {
-            // When we are logged in, refresh the auth token periodically
-            this.startPeriodicRefresh();
-        } else if (!nextProps.loggedIn && this.props.loggedIn) {
-            // Stop refreshing when we log out
-            this.stopPeriodicRefresh();
-        }
-    }
 
-    componentWillUnmount() {
-        this.stopPeriodicRefresh();
-    }
 
-    startPeriodicRefresh() {
-        this.refreshInterval = setInterval(
-            () => this.props.dispatch(refreshAuthToken()),
-            60 * 60 * 1000 // One hour
-        );
-    }
+  login() {
+    this.props.auth.login();
+  }
 
-    stopPeriodicRefresh() {
-        if (!this.refreshInterval) {
-            return;
-        }
+  logout() {
+    this.props.auth.logout();
+  }
 
-        clearInterval(this.refreshInterval);
-    }
+
     render(){
+    const { isAuthenticated } = this.props.auth;
+
         return (
-            <Router>
-                <div className="app">
-                    <main>
-                        <Route exact path="/" component={LandingPage} />
-                        <Route exact path="/homePage/" component={UserHomePage} />
-                    	<Route exact path="/charts/" component={ChartsPage} />
-                    </main>
-                </div>
-            </Router>
+            <div>
+        <Navbar fluid>
+          <Navbar.Header>
+            <Navbar.Brand>
+              <a href="#">Day-By-Day</a>
+            </Navbar.Brand>
+            {
+              !isAuthenticated() && (
+                  <Button
+                    bsStyle="primary"
+                    className="btn-margin"
+                    onClick={this.login.bind(this)}
+                  >
+                    Log In
+                  </Button>
+                )
+            }
+            {
+              isAuthenticated() && (
+                  <Button
+                    bsStyle="primary"
+                    className="btn-margin"
+                    onClick={this.logout.bind(this)}
+                  >
+                    Log Out
+                  </Button>
+                )
+            }
+          </Navbar.Header>
+        </Navbar>
+      </div>
+        
         );
     }
 }
 
 const mapStateToProps = state => ({
-    hasAuthToken: state.auth.authToken !== null,
-    loggedIn: state.auth.currentUser !== null
+    
 });
 
 export default withRouter(connect(mapStateToProps)(App));
