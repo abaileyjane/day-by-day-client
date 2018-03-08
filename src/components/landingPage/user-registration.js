@@ -1,13 +1,17 @@
 import React from 'react';
 import {FormControl, FormGroup, ControlLabel, Button} from 'react-bootstrap';
+import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux'
 
 import {registerUser} from '../../actions/users';
 import {login} from '../../actions/auth'
 
 
-export default class UserSignupForm extends React.Component {
+
+export  class UserSignupForm extends React.Component {
   constructor(props, context) {
     super(props, context);
+    const {dispatch} = props;
 
     this.handleFNameChange = this.handleFNameChange.bind(this);
     this.handleLNameChange = this.handleLNameChange.bind(this);
@@ -84,17 +88,16 @@ export default class UserSignupForm extends React.Component {
     this.setState({ repeatPasswordValue: e.target.value });
   }
 
-  onSubmit(values) {
-        const {email, password, firstName, lastName} = values;
-        const user = {email, password, firstName, lastName};
-        return this.props
-            .dispatch(registerUser(user))
-            .then(() => this.props.dispatch(login(email, password)));
+  onSubmit(event) {
+        event.preventDefault();
+        const user = {email:this.state.emailValue, password:this.state.passwordValue, firstName:this.state.fNameValue, lastName: this.state.lNameValue};
+        this.props.dispatch(registerUser(user))
+            .then(() => this.props.dispatch(login(this.state.emailValue, this.state.passwordValue)));
     }
 
   render() {
     return (
-      <form onSubmit={this.props.handleSubmit}>
+      <form onSubmit={e=>this.onSubmit(e)}>
         <FormGroup
           controlId="firstName"
           validationState={this.getFNameValidationState()}
@@ -124,7 +127,7 @@ export default class UserSignupForm extends React.Component {
         </FormGroup>
 
          <FormGroup
-          controlId="email"
+          controlId="emailRegister"
           validationState={this.getEmailValidationState()}
         >
           <ControlLabel>Email</ControlLabel>
@@ -138,7 +141,7 @@ export default class UserSignupForm extends React.Component {
         </FormGroup>
 
         <FormGroup
-          controlId="password"
+          controlId="passwordRegister"
           validationState={this.getPasswordValidationState()}
             type='password'
         >
@@ -175,4 +178,10 @@ export default class UserSignupForm extends React.Component {
     );
   }
 }
+function mapStateToProps(state){
+
+  return {}
+}
+export default connect(mapStateToProps)(UserSignupForm);
+
 

@@ -11,9 +11,7 @@ export class Scatterplot extends React.Component{
     this.state={
         
       
-        data:{xLabels: [],
-            yLabels: [],
-            datasets: []},
+        data:{datasets: [] },
         options: {responsive: true,
           title:{
             display: true,
@@ -23,95 +21,79 @@ export class Scatterplot extends React.Component{
             display: false
           },
           scales: {
-            xAxes: {
+            xAxes: [{
+              type:'category',
+              labels:['alanna','bailey','was','here'],
               display: true,
               scaleLabel: {
                 display: true,
                 labelString: 'Date'
-              }}
+              }
+            }]
             ,
-            yAxes: {
+            yAxes: [{
               type: 'category',
               position: 'left',
+              labels: ['please', 'god', 'work'],
               display: true,
               scaleLabel: {
                 display: true,
-                labelString: ''
+                labelString: 'yaxis'
               },
-              ticks: {
-                reverse: true
-              }
-            }
+              ticks: {}
+              
+            }]
           }
       }
     }
   }
     
   
-  getHabits(){
-    console.log(this.props.habits);
+  setBigState(startDate, stopDate){
       const habitLabels = []
       this.props.habits.map(function(el){
-        console.log(el.title)
         habitLabels.push(el.title)})
-      console.log(habitLabels)
-      return this.setState({data: Object.assign({}, this.state.data,{yLabels: habitLabels})})
-  }
-
- 
-
-  getDates(startDate, stopDate) {
-        
         var dateArray = new Array();
         var currentDate = moment(startDate);
         var stopDate = moment(stopDate);
         while (currentDate <= stopDate) {
             dateArray.push( moment(currentDate).format('MMMM D Y') )
             currentDate = moment(currentDate).add(1, 'days');
-    }
-    console.log(dateArray)
-        return this.setState({data:{...this.state.data, xLabels: dateArray}});
+        }
+        this.setState({ options:{...this.state.options, scales:{yAxes:
+            [{
+              type:'category',
+              labels:habitLabels,
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'habits'
+              }
+            }], xAxes:
+            [{
+              type:'category',
+              labels:dateArray,
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'dates'
+              }
+            }]}}})
     }  
 
-  generateDataPoints(){
-      let dataset=[];
-      
-      for(let i=0; i<this.props.habits.length; i++){
-        let currentHabit=this.props.habits[i];
-        let newDataSet={
-          data: [],
-          fill: false,
-          showLine: false,
-          borderColor: 'rgb(75, 192, 192)',
-          backgroundColor: 'rgb(75, 192, 192)'
-        }
-          for (let i=0; i<this.state.data.xLabels.length; i++){
-            let currentDate=this.state.data.xLabels[i];
-            let currentlog=this.props.dailyLog.filter({date: currentDate});
-            if (currentlog.log.includes({habit:currentHabit, complete:true})){
-              newDataSet.data.push(currentHabit)
-            }
-            else {
-              newDataSet.data.push(null)
-            }
-          }
-        dataset.push(newDataSet);
+  // 
 
-      }
-      return this.setState({data:{datasets:dataset}})
+  componentDidMount(){
+    this.setBigState(this.props.startDate, this.props.stopDate);
     }
-
-  componentWillMount(){
-    this.getDates(this.props.startDate, this.props.stopDate);
-    this.getHabits();
-    this.generateDataPoints();
-    console.log(this.state)}
-
+    //   // this.generateDataPoints();
+  
   render(){
-    
+    const {data, options} = this.state
+    console.log(this.state)
     return (
       <div>
-        <Line  data={this.state.data} options={this.state.options} />
+        <Line  data={data} options={options} />
       </div>  
     
   

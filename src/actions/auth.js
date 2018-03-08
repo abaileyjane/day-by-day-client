@@ -42,7 +42,11 @@ const storeAuthInfo = (authToken, dispatch) => {
     saveAuthToken(authToken);
 };
 
-export const login = (username, password) => dispatch => {
+export const login = (uemail, upassword) => dispatch => {
+    console.log('login action deployed', JSON.stringify({
+                email: uemail,
+                password: upassword
+            }))
     dispatch(authRequest());
     return (
         fetch(`${API_BASE_URL}/auth/login`, {
@@ -51,8 +55,8 @@ export const login = (username, password) => dispatch => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                username,
-                password
+                email: uemail,
+                password: upassword
             })
         })
             // Reject any requests which don't return a 200 status, creating
