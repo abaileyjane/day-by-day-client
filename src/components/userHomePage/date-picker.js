@@ -17,8 +17,8 @@ export function Date(props){
 	}
 	return  (
 		<div>
-      		<p>props.label</p>
-      		<DayPickerInput onDayChange={day => {setDate(day);}} format="M/D/YYYY" formatDate={formatDate} parseDate={parseDate} placeholder="MM/DD/YYYY" />
+      		<p>{props.label}</p>
+      		<DayPickerInput onDayChange={day => {setDate(day);}} format="M/D/YYYY" formatDate={formatDate} parseDate={parseDate} placeholder={props.placeholder} />
     	</div>
 
     )
