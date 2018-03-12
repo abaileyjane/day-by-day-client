@@ -81,4 +81,4 @@ getProfile(cb) {
     }
     cb(err, profile);
   });
-}
+}}

@@ -4,50 +4,63 @@ import {connect} from 'react-redux';
 import Habit from './single-habit-checkoff.js'
 
 import {FormGroup,FormControl, FieldGroup, ControlLabel, Button} from 'react-bootstrap';
-import {removeHabit} from '../../actions'
+import {removeHabit, setDayLog} from '../../actions'
 
 
 
 export function HabitChecklistForm (props){
-
-	const habitButtons = props.habits.map((entry, index)=>{
-
-
+	const habits=props.habits;
+	function compare(a,b) {
+  			if (a.title < b.title)
+    			return -1;
+  			if (a.title > b.title)
+    		return 1;
+  			return 0;
+			}
+	habits.sort(compare);
+	const habitButtons = habits.map((entry, index)=>{
 
 			return <Habit key={index} habit={entry.title} handleClick={e=>props.dispatch(removeHabit(e))} checked={entry.complete} />
 		});
 
-
+console.log('habitButtons', habitButtons)
 
 	const handleSubmit = function(e){
 			e.preventDefault();
 			let setLog = [];
+			console.log('this ran and the current props.habits are', props.habits)
 			props.habits.map((entry, index)=>{
 				console.log(entry)
-				setLog.push( {habit : (entry.props.title),
-							complete: entry.props.complete
+				setLog.push( {habit : (entry.title),
+							complete: entry.complete
 							})
 				})
 			
 			console.log(setLog, 'setlog');
-			props.onSubmit(setLog);
-
-			// location.href='/charts-page'
+			props.dispatch(setDayLog(props.date, setLog));
 		}
 
+			console.log(props.dailyLog, 'this is the daily log')
 
 
 		return(
-			<form id="daily-habit-checklist" onSubmit={handleSubmit}>
+			<form id="daily-habit-checklist" onSubmit={handleSubmit} className="form-horizontal">
 				<FormGroup
 					controlId="daily-habit-checklist"
 				>
 					
-					<ControlLabel>Daily Log</ControlLabel>
-					{habitButtons}
-					<Button type='submit' bsStyle="primary" bsSize="large" block>
-	            		Log your Day
-	          		</Button>
+					<ControlLabel className='checklist-title'>Today I . . . </ControlLabel>
+					<div className='checklist-columns container '>
+						<div className='row col-sm-8'>
+							{habitButtons}
+						</div>
+						<div className='row col-sm-8'>
+							<div className='col-sm-3'></div>
+							<Button type='submit' bsStyle="primary" bsSize="large" className='col-sm-6 logbutton' >
+	            				Log your Day
+	          				</Button>
+	          			</div>
+	          		</div>
 	          	</FormGroup>
 	          </form>
 
@@ -58,7 +71,8 @@ export function HabitChecklistForm (props){
 
 const mapStateToProps = (state,props) =>( 
 	{habits: state.habits,
-		date: state.selectedDate})
+	date: state.selectedDate,
+	dailyLog: state.dailyLog})
  
 
 

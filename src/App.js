@@ -1,62 +1,42 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import UserHomePage from './components/userHomePage/userHomePage.js';
 import {LandingPage} from './components/landingPage/landing-page.js';
 import ChartsPage from './components/charts/charts-page.js';
-import { withRouter} from 'react-router-dom';
-import { Navbar, Button } from 'react-bootstrap';
+import { withRouter, Route} from 'react-router-dom';
+import Auth from './auth';
+import {Callback} from './callback';
+import{createHistory} from './history'
+import NavBar from './components/navbar.js';
 
-import Auth from './auth.js';
 
+const auth = new Auth();
 
+const handleAuthentication = (nextState, replace) => {
+  if (/access_token|id_token|error/.test(nextState.location.hash)) {
+    auth.handleAuthentication();
+  }
+}
 
 export class App extends React.Component {
 
 
-  login() {
-    this.props.auth.login();
-  }
-
-  logout() {
-    this.props.auth.logout();
-  }
-
+  
 
     render(){
-    const { isAuthenticated } = this.props.auth;
-
+    console.log(auth)
         return (
             <div>
-        <Navbar fluid>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <a href="#">Day-By-Day</a>
-            </Navbar.Brand>
-            {
-              !isAuthenticated() && (
-                  <Button
-                    bsStyle="primary"
-                    className="btn-margin"
-                    onClick={this.login.bind(this)}
-                  >
-                    Log In
-                  </Button>
-                )
-            }
-            {
-              isAuthenticated() && (
-                  <Button
-                    bsStyle="primary"
-                    className="btn-margin"
-                    onClick={this.logout.bind(this)}
-                  >
-                    Log Out
-                  </Button>
-                )
-            }
-          </Navbar.Header>
-        </Navbar>
+              <NavBar auth={auth} />
+
+        <Route path="/landingpage" render={(props) => <LandingPage auth={auth} {...props} />} />
+        <Route path="/homePage" render={(props) => <UserHomePage auth={auth} {...props} />} />
+        <Route path="/charts" render={(props) => <ChartsPage auth={auth} {...props} />} />
+        <Route path="/callback" render={(props) => {
+          handleAuthentication(props);
+          return <Callback {...props} /> 
+
+        }}/>
       </div>
         
         );

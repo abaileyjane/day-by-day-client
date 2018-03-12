@@ -1,4 +1,6 @@
 //actions needed: add habit, log day, log in, create user
+ import {API_BASE_URL} from '../config'
+
 
 export const ADD_HABIT = 'ADD_HABIT';
 export const addHabit = title=>({
@@ -14,7 +16,7 @@ export const addLogDate  = date=>({
 
 export const SET_DAY_LOG = 'SET_DAY_LOG';
 export const setDayLog = (date, log) =>({
-	type:setDayLog,
+	type:SET_DAY_LOG,
 	date,
 	log
 })
@@ -26,9 +28,10 @@ export const removeHabit = habit =>({
 })
 
 export const CHANGE_CHECKED = 'CHANGE_CHECKED';
-export const changeChecked= title => ({
+export const changeChecked= (title, complete) => ({
 	type: CHANGE_CHECKED,
-	title
+	title,
+	complete
 })
 
 export const fetchUser = () => dispatch => {
@@ -43,7 +46,7 @@ export const fetchUser = () => dispatch => {
 };
 
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
-export const fetchUSERSuccess = user => ({
+export const fetchUserSuccess = user => ({
     type: FETCH_USER_SUCCESS,
     user
 });
@@ -71,7 +74,7 @@ export const saveUserInfo = (user) => dispatch => {
 }
 
 export const SAVE_USER_INFO_SUCCESS = 'SAVE_USER_INFO_SUCCESS';
-export const fetchUSERSuccess = user => ({
+export const saveUserInfoSuccess = user => ({
     type: FETCH_USER_SUCCESS,
     user
 });

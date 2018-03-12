@@ -1,23 +1,42 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import '../../one-page-wonder.css'
 
 
 
-import NavBarLoggedIn from '../navbar-logged-in.js';
+import Auth from '../../auth'
+import NavBar from '../navbar.js';
 import ScatterplotArea from './scatterplot-area.js'
 
+const auth = new Auth();
 export function ChartsPage(props){
 
-return(
+
+	const { isAuthenticated } = props.auth;
+return (<div>
+{isAuthenticated() && (
+
+
 	<div className="ChartsPage">
-		<NavBarLoggedIn firstName={props.firstName} />
-		{' '}
+		<NavBar auth={auth} />
+		<div className="header">
+			<h1>My Progress</h1>
+		</div>
 		<ScatterplotArea />
 	</div>
-	)
 	
-}
+	
+)}
+{(!isAuthenticated()) && (
+	<div className="ChartsPage">
+		<NavBar auth={auth} />
+		<ScatterplotArea />
+	</div>
+)
 
+}
+</div>
+)}
 const mapStateToProps = (state) => (
 	
 	{

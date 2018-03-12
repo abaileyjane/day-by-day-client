@@ -2,15 +2,16 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Line} from 'react-chartjs-2';
 import moment from 'moment';
+import '../../one-page-wonder.css'
+
 var LineChart = require( 'react-chartjs').Line;
+
 
 
 export class Scatterplot extends React.Component{
   constructor(props){
     super(props);
     this.state={
-        startDate: this.props.startDate,
-          stopDate:this.props.stopDate,
           labels: [],
           datasets: [
             {label:'homework',
@@ -58,13 +59,14 @@ export class Scatterplot extends React.Component{
       this.props.habits.map(function(el){
         habitLabels.push(el.title)})
         var dateArray = new Array();
+        console.log(this.props.startDate, 'start', this.props.stopDate, 'stop')
         var currentDate = moment(this.state.startDate);
         var stopDate = moment(this.state.stopDate);
         while (currentDate <= stopDate) {
             dateArray.push( moment(currentDate).format('MMMM D Y') )
             currentDate = moment(currentDate).add(1, 'days');
         }
-        console.log("serBigState ran", dateArray)
+        console.log("serBigState ran", dateArray, habitLabels)
         this.setState({ 
           datasets:[],
           labels: dateArray,
@@ -82,7 +84,7 @@ export class Scatterplot extends React.Component{
             [{
               type:'category',
               ticks:{reverse:true},
-              labels: dateArray,
+              labels:dateArray,
               display: true,
               scaleLabel: {
                 display: true,
@@ -121,7 +123,7 @@ generateDataPoints(){
       return this.setState({datasets:dataSetArray})
     }
 
-  shouldComponentUpdate(nextProps, nextState){
+ componentWillMount(nextProps, nextState){
         this.setBigState();
 
   }
@@ -152,14 +154,14 @@ generateDataPoints(){
 
 
 const mapStateToProps = (state) => {
-  console.log('this ran', state.index.habits);
+  console.log('this ran', state);
 
   return (
   
   {
   
-  habits: state.index.habits,
-  dailyLog: state.index.dailyLog}
+  habits: state.habits,
+  dailyLog: state.dailyLog}
   )}
 
 export default connect(mapStateToProps)(Scatterplot)

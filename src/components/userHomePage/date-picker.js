@@ -13,7 +13,7 @@ export function Date(props){
 		console.log(date);
 		const formattedDate= moment(date).format('MMMM D Y');
 		console.log(formattedDate)
-		props.setDate(date)		
+		props.setDate(formattedDate)		
 	}
 	return  (
 		<div>

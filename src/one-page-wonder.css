@@ -1,0 +1,243 @@
+body {
+  font-family: 'Lato'!important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Catamaran'!important;
+  font-weight: 800 !important;
+}
+.p-5{
+  margin-left:20%;
+  margin-top:100px;
+}
+
+.text.p-5{
+  margin-top:160px !important;
+  .margin-right: 30px !important;
+}
+
+
+.btn-xl {
+  text-transform: uppercase !important;
+  padding: 1.5rem 3rem !important;
+  font-size: 0.9rem !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.1rem !important;
+  color:black;
+}
+
+.bg-black {
+  background-color: #000 !important;
+}
+
+.rounded-pill {
+  border-radius: 5rem !important;
+}
+img{
+  vertical-align: middle;
+
+}
+
+.img-fluid{
+
+  max-width:100% !important;
+  height:300px !important;
+}
+
+.rounded-circle{
+  border-radius: 50% !important;
+}
+
+
+.navbar-custom {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  padding-right: 1rem !important;
+}
+
+.navbar-custom .navbar-brand {
+  text-transform: uppercase !important;
+  font-size: 2rem !important;
+  letter-spacing: 0.1rem !important;
+  font-weight: 700 !important;
+}
+
+.footer{
+  margin-top: 30px !important;
+}
+
+.navbar-custom .navbar-nav .nav-item .nav-link a {
+  text-transform: uppercase !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1rem !important;
+}
+.navbar-nav{
+  margin-top:10px !important;
+}
+
+header.masthead {
+  position: relative !important;
+  overflow: hidden !important;
+  padding-top: calc(7rem + 72px) !important;
+  padding-bottom: 7rem !important;
+  background: linear-gradient(0deg, #ff6a00 0%, #ee0979 100%) !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-attachment: scroll !important;
+  background-size: cover !important;
+}
+
+header.masthead .masthead-content {
+  z-index: 1 !important;
+  position: relative !important;
+  height:60vh !important;
+
+}
+
+header.masthead .masthead-content .masthead-heading .landingpage{
+  font-size: 6rem !important;
+  color: white;
+  margin-top:90px;
+}
+
+header.masthead .masthead-content .masthead-heading .homepage{
+  font-size: 6rem !important;
+  color: white;
+  margin-top:45px;
+ 
+}
+
+header.masthead .masthead-content .masthead-subheading {
+  font-size: 2rem !important;
+}
+
+header.masthead .bg-circle {
+  z-index: 0 !important;
+  position: absolute !important;
+  border-radius: 100% !important;
+  background: linear-gradient(0deg, #ee0979 0%, #ff6a00 100%) !important;
+}
+
+header.masthead .bg-circle-1 {
+  height: 90rem !important;
+  width: 90rem !important;
+  bottom: -55rem !important;
+  left: -55rem !important;
+}
+
+header.masthead .bg-circle-2 {
+  height: 50rem !important;
+  width: 50rem !important;
+  top: -25rem !important;
+  right: -25rem !important;
+}
+
+header.masthead .bg-circle-3 {
+  height: 20rem !important;
+  width: 20rem !important;
+  bottom: -10rem !important;
+  right: 5% !important;
+}
+
+header.masthead .bg-circle-4 {
+  height: 30rem !important;
+  width: 30rem !important;
+  top: -5rem !important;
+  right: 35% !important;
+}
+
+@media (min-width: 992px) {
+  header.masthead {
+    padding-top: calc(10rem + 55px) !important;
+    padding-bottom: 10rem !important;
+  }
+
+  header.homepage{
+  }
+  header.masthead .masthead-content .masthead-heading {
+    font-size: 8rem !important;
+  }
+  header.masthead .masthead-content .masthead-subheading {
+    font-size: 4rem !important;
+  }
+}
+.nav-item{
+  margin-left:20px !important;
+  margin-right:20px !important;
+}
+.navbar-text-area{
+  margin-top:15px !important;
+}
+.bg-primary {
+  background-color: #ee0979 !important;
+}
+
+.btn-primary {
+  
+  font-family: 'Lato' !important;
+
+  background-color: #ee0979 !important;
+  border-color: #ee0979 !important;
+}
+
+.btn-primary:active, .btn-primary:focus, .btn-primary:hover {
+  background-color: #bd0760 !important;
+  border-color: #bd0760 !important;
+}
+
+.btn-primary:focus {
+  box-shadow: 0 0 0 0.2rem rgba(238, 9, 121, 0.5) !important;
+}
+
+.btn-secondary {
+
+  background-color: #ff6a00 !important;
+  border-color: #ff6a00 !important;
+}
+
+.btn-secondary:active, .btn-secondary:focus, .btn-secondary:hover {
+  background-color: #cc5500 !important;
+  border-color: #cc5500 !important;
+}
+
+.btn-secondary:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 106, 0, 0.5) !important;
+}
+
+.checklist-container{
+  background-color: white;
+  border: black solid 3px;
+  padding:10px
+}
+
+.checklist-title{
+  font-size:2em;
+}
+
+.checklist-radio{
+  display: inline;
+    break-inside: avoid-column;
+
+}
+.checklist-columns{
+border-right: black 1px solid;
+
+}
+
+.log-button{
+  -webkit-text-stroke: 1px black;
+   color: white;
+   text-shadow:
+       3px 3px 0 #000,
+     -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+}

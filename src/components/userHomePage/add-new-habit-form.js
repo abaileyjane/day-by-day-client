@@ -42,7 +42,7 @@ export default class AddNewHabitForm extends React.Component {
           controlId="newHabitForm"
           validationState={this.getValidationState()}
         >
-          <ControlLabel>Track New Habit</ControlLabel>
+          <ControlLabel>New Habit</ControlLabel>
           <FormControl
             type="text"
             value={this.state.value}
@@ -50,7 +50,8 @@ export default class AddNewHabitForm extends React.Component {
             onChange={this.handleChange}
           />
           <FormControl.Feedback />
-          <Button type="submit" bsStyle="primary" bsSize="large" >
+          {''}
+          <Button type="submit" bsStyle="primary" className='btn-md logbutton' >
             Start Tracking
           </Button>
         </FormGroup>
