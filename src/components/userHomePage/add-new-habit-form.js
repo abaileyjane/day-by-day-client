@@ -51,7 +51,7 @@ export default class AddNewHabitForm extends React.Component {
           />
           <FormControl.Feedback />
           {''}
-          <Button type="submit" bsStyle="primary" className='btn-md logbutton' >
+          <Button type="submit" bsStyle="primary" className='btn-md btn-secondary addHabitButton' >
             Start Tracking
           </Button>
         </FormGroup>

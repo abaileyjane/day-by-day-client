@@ -28,11 +28,11 @@ export  class  Habit extends React.Component{
 	render(){
 	return (
 
-		<div className="checklist-radio form-inline col-sm-8 col-md-8 col-lg-6">
+		<div className="checklist-radio form-inline row text-left">
 			<Checkbox className="checkBox input-lg"  onChange={this.handleChange} checked={this.props.checked} >
 				{this.props.habit}
 			</Checkbox>
-			<Button onClick={this.handleClick} bsStyle="secondary" className="btn-xs">Delete</Button>
+			<Button onClick={this.handleClick}  className="btn-xs btn-secondary">Delete</Button>
 		</div>
 	)
 }

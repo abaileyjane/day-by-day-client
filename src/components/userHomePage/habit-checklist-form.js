@@ -2,9 +2,10 @@ import React from 'react';
 
 import {connect} from 'react-redux';
 import Habit from './single-habit-checkoff.js'
+import {getAccessToken} from '../../auth';
 
 import {FormGroup,FormControl, FieldGroup, ControlLabel, Button} from 'react-bootstrap';
-import {removeHabit, setDayLog} from '../../actions'
+import {removeHabit, setDayLog, saveUserInfo} from '../../actions'
 
 
 
@@ -23,7 +24,8 @@ export function HabitChecklistForm (props){
 			return <Habit key={index} habit={entry.title} handleClick={e=>props.dispatch(removeHabit(e))} checked={entry.complete} />
 		});
 
-console.log('habitButtons', habitButtons)
+	
+
 
 	const handleSubmit = function(e){
 			e.preventDefault();
@@ -38,25 +40,26 @@ console.log('habitButtons', habitButtons)
 			
 			console.log(setLog, 'setlog');
 			props.dispatch(setDayLog(props.date, setLog));
-		}
+				props.dispatch(saveUserInfo(props.habits, props.dailyLog))
+	}
 
-			console.log(props.dailyLog, 'this is the daily log')
 
-
+console.log(props)
 		return(
 			<form id="daily-habit-checklist" onSubmit={handleSubmit} className="form-horizontal">
 				<FormGroup
-					controlId="daily-habit-checklist"
-				>
+					controlId="daily-habit-checklist">
 					
-					<ControlLabel className='checklist-title'>Today I . . . </ControlLabel>
-					<div className='checklist-columns container '>
-						<div className='row col-sm-8'>
-							{habitButtons}
+					<div className="col-xs-3"></div>
+					<div className='checklist-columns container col-xs-6 '>
+						<div className='row'>
+							<div className='text-center '>
+								{habitButtons}
+							</div>
 						</div>
-						<div className='row col-sm-8'>
+						<div className='row col-sm-12'>
 							<div className='col-sm-3'></div>
-							<Button type='submit' bsStyle="primary" bsSize="large" className='col-sm-6 logbutton' >
+							<Button type='submit' bsStyle="primary" bsSize="large" className='col-sm-6 logbutton text-center' >
 	            				Log your Day
 	          				</Button>
 	          			</div>

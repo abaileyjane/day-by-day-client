@@ -6,10 +6,8 @@ import {Link, Redirect} from 'react-router-dom';
 
 
 import NavBar from '../navbar.js';
-import Auth from '../../auth';
 import Footer from '../footer.js';
 
-const auth = new Auth();
 
 export function LandingPage(props){
 console.log(props)
@@ -92,7 +90,6 @@ console.log(props)
 }
 
 const mapStateToProps = state => ({
-	loggedIn: state.auth.currentUser !== null
 });
 
 export default connect(mapStateToProps)(LandingPage)

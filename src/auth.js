@@ -1,84 +1,96 @@
+import decode from 'jwt-decode';
+import  history  from './history';
 import auth0 from 'auth0-js';
-import history from './history';
+const ID_TOKEN_KEY = 'id_token';
+const ACCESS_TOKEN_KEY = 'access_token';
 
+const CLIENT_ID = 'w2fQsODQp6KzxbbsTcFailw5S1zc565c';
+const CLIENT_DOMAIN = 'day-by-day.auth0.com';
+const REDIRECT = 'http://localhost:3000/callback';
+const SCOPE = 'openid';
+const AUDIENCE = 'https://day-by-day.auth0.com/userinfo';
 
-export default class Auth {
-  auth0 = new auth0.WebAuth({
-    domain: 'day-by-day.auth0.com',
-    clientID: 'w2fQsODQp6KzxbbsTcFailw5S1zc565c',
-    redirectUri: 'http://localhost:3000/homePage',
-    audience: 'https://day-by-day.auth0.com/userinfo',
+var auth = new auth0.WebAuth({
+  clientID: CLIENT_ID,
+  domain: CLIENT_DOMAIN
+});
+
+export function login() {
+  auth.authorize({
     responseType: 'token id_token',
-    scope: 'openid'
+    redirectUri: REDIRECT,
+    audience: AUDIENCE,
+    scope: SCOPE
   });
+}
 
-  login() {
-    this.auth0.authorize();
+export function getUserData(){
+ }
+
+export function logout() {
+  clearIdToken();
+  clearAccessToken();
+  history.replace('/landingPage');
+  window.location.href = "/landingPage";
+
+}
+
+export function requireAuth(nextState, replace) {
+  if (!isLoggedIn()) {
+    replace({pathname: '/landingPage'});
   }
-constructor() {
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
-    this.handleAuthentication = this.handleAuthentication.bind(this);
-    this.isAuthenticated = this.isAuthenticated.bind(this);
-    this.getProfile = this.getProfile.bind(this);
+}
 
-  }
+export function getIdToken() {
+  return localStorage.getItem(ID_TOKEN_KEY);
+}
 
-  userProfile;
+export function getAccessToken() {
+  return localStorage.getItem(ACCESS_TOKEN_KEY);
+}
 
+function clearIdToken() {
+  localStorage.removeItem(ID_TOKEN_KEY);
+}
 
-  handleAuthentication() {
-    this.auth0.parseHash((err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setSession(authResult);
-        history.replace('/home');
-      } else if (err) {
-        history.replace('/home');
-        console.log(err);
-      }
-    });
-  }
+function clearAccessToken() {
+  localStorage.removeItem(ACCESS_TOKEN_KEY);
+}
 
-  setSession(authResult) {
-    // Set the time that the Access Token will expire at
-    let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-    localStorage.setItem('access_token', authResult.accessToken);
-    localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem('expires_at', expiresAt);
-    // navigate to the home route
-    history.replace('/home');
-  }
+// Helper function that will allow us to extract the access_token and id_token
+function getParameterByName(name) {
+  let match = RegExp('[#&]' + name + '=([^&]*)').exec(window.location.hash);
+  return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+}
 
-  logout() {
-    // Clear Access Token and ID Token from local storage
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('expires_at');
-    // navigate to the home route
-    history.replace('/home');
-  }
+// Get and store access_token in local storage
+export function setAccessToken() {
+  let accessToken = getParameterByName('access_token');
+  localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+}
 
-  isAuthenticated() {
-    // Check whether the current time is past the 
-    // Access Token's expiry time
-    let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-    return new Date().getTime() < expiresAt;
-  }
+// Get and store id_token in local storage
+export function setIdToken() {
+  let idToken = getParameterByName('id_token');
+  localStorage.setItem(ID_TOKEN_KEY, idToken);
+}
 
-getAccessToken() {
-    const accessToken = localStorage.getItem('access_token');
-    if (!accessToken) {
-      throw new Error('No Access Token found');
-    }
-    return accessToken;
-  }
-  
-getProfile(cb) {
-  let accessToken = this.getAccessToken();
-  this.auth0.client.userInfo(accessToken, (err, profile) => {
-    if (profile) {
-      this.userProfile = profile;
-    }
-    cb(err, profile);
-  });
-}}
+export function isLoggedIn() {
+  const idToken = getIdToken();
+  return !!idToken && !isTokenExpired(idToken);
+}
+
+function getTokenExpirationDate(encodedToken) {
+  const token = decode(encodedToken);
+  if (!token.exp) { return null; }
+
+  const date = new Date(0);
+  date.setUTCSeconds(token.exp);
+
+  return date;
+}
+
+function isTokenExpired(token) {
+  const expirationDate = getTokenExpirationDate(token);
+  return expirationDate < new Date();
+}

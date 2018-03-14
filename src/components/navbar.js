@@ -1,26 +1,13 @@
 import React from 'react';
 import '../one-page-wonder.css'
-import './navbar.css';
 import {Logo} from './logo.js';
 import {Nav, Navbar, NavItem, Button} from 'react-bootstrap';
-import Auth from '../auth';
+import {login, logout, isLoggedIn} from '../auth';
 
-const auth = new Auth();
 
 
 
 export default function NavBar(props){
-	const { isAuthenticated, logout } = props.auth;
-
-	let login=function(e) {
-		e.preventDefault;
-    props.auth.login();}
-
-
-	let logOut=function(e) {
-		e.preventDefault;
-		console.log('logout')
-    props.auth.logout();}
 	return (
 
 
@@ -36,18 +23,14 @@ export default function NavBar(props){
 		  <Navbar.Collapse>
 		
 		  {
-              !isAuthenticated() && (
+              !isLoggedIn() && (
              <Nav className='navbar-nav' pullRight>
-             <Navbar.Text className='navbar-text-area' style={{marginTop:15 +'px'}}>
-              		Go to :
-              		<Navbar.Link className='nav-item nav-link' href="/homepage">My Daily Log</Navbar.Link>
-              		<Navbar.Link className='nav-item nav-link' href="/charts">My Progress</Navbar.Link>
-              	</Navbar.Text>
+     
              		
 	                  <Button className = 'btn-primary'
 	                    bsStyle="primary"
 	                    className="btn-margin"
-	                    onClick={e=>login(e)}
+	                    onClick={()=>login()}
 	                  >
 	                    Log In
 	                  </Button>
@@ -55,17 +38,17 @@ export default function NavBar(props){
                 )
             }
              {
-              isAuthenticated() && (
-              	<Nav className='navbar-nav' >
-				<Navbar.Text>
+              isLoggedIn() && (
+              	<Nav className='navbar-nav' pullRight >
+				<Navbar.Text className='navbar-text-area'>
               		Go to :
-              		<Navbar.Link href="/homepage">My Daily Log</Navbar.Link>
-              		<Navbar.Link href="/charts">My Progress</Navbar.Link>
+              		<Navbar.Link className='nav-item' href="/homepage">My Daily Log</Navbar.Link>
+              		<Navbar.Link className='nav-item' href="/charts">My Progress</Navbar.Link>
               	</Navbar.Text>
-	             <Button className = 'btn-primary'
+	             <Button className = 'btn-primary btn-margin'
 	                    bsStyle="primary"
-	                    className="btn-margin"
-	                    onClick={e=>logOut(e)}
+	                 
+	                    onClick={()=>logout()}
 	                  >
 	                    Log Out
 	                  </Button>

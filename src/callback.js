@@ -1,13 +1,19 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
+import { setIdToken, setAccessToken } from './auth';
 
 export class Callback extends Component {
-  render() {
-    
 
-    return (
-      <div>
-        <p> loading</p>
-      </div>
-    );
+  constructor() {
+    super()
+  }
+
+  componentDidMount() {
+    setAccessToken();
+    setIdToken();
+    window.location.href = "/homepage";
+  }
+
+  render() {
+    return null;
   }
 }

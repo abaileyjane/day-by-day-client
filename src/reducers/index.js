@@ -4,7 +4,9 @@ import moment from 'moment'
 
 const initialState = {
 	selectedDate: moment().format('MMMM D Y'),
-     habits:[{title:'wash dishes',complete:false},{title: 'do homeword', complete:false}],
+	stopDate: moment().format('MMMM D Y'),
+	startDate:moment().subtract(30, 'days').format('MMMM D Y'),
+     habits:[{title:'wash dishes',complete:false},{title:'Clean Room',complete:false},{title: 'do homework', complete:false},{title:'go shopping',complete:false}],
      dailyLog: []
 }
 
@@ -16,6 +18,15 @@ const Reducer = (state=initialState, action) =>{
 				complete: false
 			}]
 		})
+
+		case'SET_START_DATE': return Object.assign({}, state, {
+			startDate: action.date
+		})
+
+		case'SET_STOP_DATE': return Object.assign({}, state, {
+			stopDate: action.date
+		})
+
 		case 'ADD_LOG_DATE': return Object.assign({}, state,{
 			selectedDate: action.date
 		})
@@ -84,16 +95,17 @@ const Reducer = (state=initialState, action) =>{
 				}
 			console.log('after habits', state.habits)
 		case 'FETCH_USER_SUCCESS': 	
-
-
 			return Object.assign({}, state, {
-				// habits: action.user.habits,
-				// dailyLog: action.user.dailyLog
+				habits: action.user.habits,
+				dailyLog: action.user.dailyLog
 			})
 
 		case 'SAVE_USER_INFO_SUCCESS':
-			//send user to charts page and clear checkboxes
-			
+				console.log('SAVE_USER_INFO_SUCCESS ran', state)
+				return Object.assign({}, state, {
+				habits: action.user.habits,
+				dailyLog: action.user.dailyLog
+			})		
 
 		
 		default: return state;

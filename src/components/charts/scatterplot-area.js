@@ -4,30 +4,53 @@ import Date from '../userHomePage/date-picker.js'
 import Scatterplot from './scatterplot.js'
 import moment from 'moment'
 import '../../one-page-wonder.css'
+import {setStartDate, setStopDate} from '../../actions'
 
 
 
-export default class ScatterplotArea extends React.Component{
-	constructor(props){
-		super(props);
-		this.state={
-			stopDate: moment().format('MMMM D Y'),
-			startDate:moment().subtract(30, 'days').format('MMMM D Y')
-		}
-	}
+export  class ScatterplotArea extends React.Component{
+	
 
 	render(){
-		console.log('scatterplot area state', this.state)
 		return(
 			<div>
 				
-				<div>
-					<Scatterplot startDate={this.state.startDate} stopDate={this.state.stopDate} />
+				
+				<div className='container'>
+				
+					<div className='row'>
+						<div className='col-sm-12'>
+							<h4>Displaying data from </h4>
+						</div>
+					</div>
+					<div className='row'>
+						<div className = 'col-sm-3'>
+						</div>
+						<div className='col-sm-3'>
+							<Date  placeholder={this.props.startDate} label="Start Date" setDate={e=> this.props.dispatch(setStartDate(e))} />
+						</div>
+						<div className="col-sm-3">
+							<Date placeholder={this.props.stopDate} label="End Date" setDate={e=> this.props.dispatch(setStopDate(e))} />
+						</div>
+					</div>
+					<div className='row'>
+						<div className='col-sm-12'>
+							<Scatterplot startDate={this.props.startDate} stopDate={this.props.stopDate} />
+						</div>
+					</div>
+				
 				</div>
-			<div>
-					<Date  placeholder={this.state.startDate} label="Start Date" setDate={e=> this.setState({startDate: e})} />
-					<Date placeholder={this.state.stopDate} label="End Date" setDate={e=> this.setState({stopDate: e})} />
-				</div>
-				</div>
+			</div>
 	)}
 }
+
+const mapStateToProps =state=> {
+	return(
+	{
+  
+  startDate: state.startDate,
+  stopDate: state.stopDate}
+)
+}
+
+export default connect(mapStateToProps)(ScatterplotArea)

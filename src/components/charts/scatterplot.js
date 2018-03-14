@@ -4,6 +4,7 @@ import {Line} from 'react-chartjs-2';
 import moment from 'moment';
 import '../../one-page-wonder.css'
 
+
 var LineChart = require( 'react-chartjs').Line;
 
 
@@ -55,13 +56,15 @@ export class Scatterplot extends React.Component{
     
   
   setBigState(){
+
       const habitLabels = []
       this.props.habits.map(function(el){
         habitLabels.push(el.title)})
         var dateArray = new Array();
         console.log(this.props.startDate, 'start', this.props.stopDate, 'stop')
-        var currentDate = moment(this.state.startDate);
-        var stopDate = moment(this.state.stopDate);
+        var currentDate = moment(this.props.startDate);
+        console.log(currentDate, 'current date')
+        var stopDate = moment(this.props.stopDate);
         while (currentDate <= stopDate) {
             dateArray.push( moment(currentDate).format('MMMM D Y') )
             currentDate = moment(currentDate).add(1, 'days');
@@ -73,34 +76,38 @@ export class Scatterplot extends React.Component{
           yAxes:
             [{
               type:'category',
+              ticks: {fontSize: 16, reverse:true},
               labels: habitLabels,
               display: true,
               scaleLabel: {
                 display: true,
-                labelString: 'habits'
+                labelString: 'Habits',
+                fontSize:24
               }
             }], 
             xAxes:
             [{
               type:'category',
-              ticks:{reverse:true},
+              ticks:{reverse:true, fontSize: 16},
               labels:dateArray,
               display: true,
               scaleLabel: {
                 display: true,
-                labelString: 'dates'
+                labelString: 'Dates',
+                fontSize:24
               }
             }]})
     }  
 
   // 
 generateDataPoints(){
+  console.log('generateDataPoints ran')
       let dataSetArray=[];
-      let habitLabels=[];
-      let dateArray=[];
+      let habitLabels=this.props.habits;
+      let dateArray=this.state.labels;
       let dataSet={};
-      
       for(let i=0; i<habitLabels.length; i++){
+          console.log('dataset', dataSet);
         let currentHabit=habitLabels[i];
         let dataSet={data:[],
           fill: false,
@@ -116,36 +123,41 @@ generateDataPoints(){
             else {
               dataSet.data.push('')
             }
-          }
+          
         dataSetArray.push(dataSet);
-
+}
       }
       return this.setState({datasets:dataSetArray})
     }
 
  componentWillMount(nextProps, nextState){
+
         this.setBigState();
+        this.generateDataPoints();
 
   }
   
   render(){
 
-    console.log(this.state)
+    console.log(this.props)
     return (
-      <div>
-        <Line  data={{labels: [this.state.labels],
+      <div className='col-sm-10'>
+        <Line  responsive='true' data={{labels: [this.state.labels],
             datasets:this.state.datasets}} 
           options={{
+            height:200,
+            width: 200,
             responsive: true,
             title:{
-              display: true,
-              text: 'Habit Tracker'
+              display: false,
+              text: 'Habit Tracker',
+              fontSize:24
             },
             legend: {
               display: false
             },
             scales: {xAxes:this.state.xAxes,yAxes:this.state.yAxes}
-        }} />
+        }}  />
       </div>  
     
   
@@ -153,15 +165,13 @@ generateDataPoints(){
 }
 
 
-const mapStateToProps = (state) => {
-  console.log('this ran', state);
-
-  return (
-  
+const mapStateToProps = (state,props) => (  
   {
   
   habits: state.habits,
-  dailyLog: state.dailyLog}
-  )}
+  dailyLog: state.dailyLog,
+  startDate: state.startDate,
+  stopDate: state.stopDate}
+  )
 
 export default connect(mapStateToProps)(Scatterplot)
