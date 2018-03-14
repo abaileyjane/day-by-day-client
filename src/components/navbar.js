@@ -27,9 +27,9 @@ export default function NavBar(props){
              <Nav className='navbar-nav' pullRight>
      
              		
-	                  <Button className = 'btn-primary'
+	                  <Button className = 'btn-primary btn-margin'
 	                    bsStyle="primary"
-	                    className="btn-margin"
+	            
 	                    onClick={()=>login()}
 	                  >
 	                    Log In

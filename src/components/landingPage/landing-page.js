@@ -71,14 +71,14 @@ console.log(props)
 		        <div className="row align-items-center">
 		          <div class="col-lg-6 order-lg-2">
 		            <div class="p-5">
-		              <img className="img-fluid rounded-circle" src={require('../../img/habits-signpost.jpg')} alt="" />
+		              <img className="img-fluid rounded-circle" src={require('../../img/logScreenShot.PNG')} alt="" />
 		            </div>
 		          </div>
 
 		          <div className="col-lg-5 order-lg-1">
 		            <div className="p-5 text">
 		              <h2 className="display-4">Success in simplicity</h2>
-		              <p>Its easy to record your dialy successes. Day by Day saves the habits you're trying to form. Simply log on each day and check off the tasks you've completed. You'll love the satisfaction of a fully checked log!</p>
+		              <p>It is easy to record your daily successes. Day by Day saves the habits you're trying to form. Simply log on each day and check off the tasks you've completed. You'll love the satisfaction of a fully checked log!</p>
 		            </div>
 		          </div>
 		        </div>

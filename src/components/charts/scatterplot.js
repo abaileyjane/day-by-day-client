@@ -55,21 +55,22 @@ export class Scatterplot extends React.Component{
   }
     
   
-  setBigState(){
+  setBigState(startDate, stopDate){
 
       const habitLabels = []
       this.props.habits.map(function(el){
         habitLabels.push(el.title)})
+
         var dateArray = new Array();
         console.log(this.props.startDate, 'start', this.props.stopDate, 'stop')
-        var currentDate = moment(this.props.startDate);
+        var currentDate = moment(startDate || this.props.startDate);
         console.log(currentDate, 'current date')
-        var stopDate = moment(this.props.stopDate);
+        var stopDate = moment(stopDate || this.props.stopDate);
         while (currentDate <= stopDate) {
             dateArray.push( moment(currentDate).format('MMMM D Y') )
             currentDate = moment(currentDate).add(1, 'days');
         }
-        console.log("serBigState ran", dateArray, habitLabels)
+        console.log("setBigState ran", dateArray, habitLabels)
         this.setState({ 
           datasets:[],
           labels: dateArray,
@@ -136,10 +137,15 @@ generateDataPoints(){
         this.generateDataPoints();
 
   }
+  componentWillUpdate(nextProps, nextState){
+    if (this.props.startDate !== nextProps.startDate || this.props.stopDate !==nextProps.stopDate){
+    this.setBigState(nextProps.startDate, nextProps.stopDate);}
+
+  }
   
   render(){
 
-    console.log(this.props)
+    console.log(this.state)
     return (
       <div className='col-sm-10'>
         <Line  responsive='true' data={{labels: [this.state.labels],

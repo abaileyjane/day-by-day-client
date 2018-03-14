@@ -19,16 +19,18 @@ h6 {
 .text.p-5{
   margin-top:160px !important;
   .margin-right: 30px !important;
+
 }
 
 
 .btn-xl {
+  margin-top: 20px;
   text-transform: uppercase !important;
   padding: 1.5rem 3rem !important;
-  font-size: 0.9rem !important;
+  font-size: 1.5rem !important;
   font-weight: 900 !important;
   letter-spacing: 0.1rem !important;
-  color:black;
+  color:#333;
 }
 
 .bg-black {
@@ -40,6 +42,7 @@ h6 {
 }
 img{
   vertical-align: middle;
+  border:black solid;
 
 }
 
@@ -189,7 +192,8 @@ header.masthead .bg-circle-4 {
 
 .btn-margin{
   margin-top:15px;
-  margin-bottom: auto
+  margin-bottom: auto; 
+  margin-right: 20px 
 }
 
 .btn-primary {
