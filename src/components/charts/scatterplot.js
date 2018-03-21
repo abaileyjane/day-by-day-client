@@ -8,41 +8,91 @@ import '../../one-page-wonder.css'
 var LineChart = require( 'react-chartjs').Line;
 
 
+    function normalizeData(beginDate, endDate, fieldsTracked, dailyLog) {
+      console.log('normalizeData ran', fieldsTracked)
+      const withinDate = (date) => (new Date(date) >= new Date (beginDate) && new Date (date) <=  new Date (endDate));
+      
+      const filterHabits = 
+        (log, names) => log.reduce((acc, next) => {
+             (next.complete && names.includes(next.habit)) ?
+               acc.push(next.habit) :
+               acc.push(" ");
+             return acc;
+          }, []);
+
+      const habitsOfInterest = dailyLog.reduce((acc, next) => {
+        if (withinDate(next.date)) {
+           acc.push(filterHabits(next.log, fieldsTracked));
+        } 
+        else {}
+        return acc;
+      }, []);
+
+     
+      const zipp = rows=>rows[0].map((_,c)=>rows.map(row=>row[c]));
+
+      console.log(habitsOfInterest, "habits of habitsOfInterest")
+      const lineChartData = zipp(habitsOfInterest);
+      console.log(lineChartData, 'lineChartData');
+      let modLineChartData = lineChartData.map(function(item){
+        item.map(function(item){
+             if(item===undefined){
+                return ""
+              }
+              else {return item}
+        }) 
+        return item
+        }
+      ) 
+      console.log('modLineChartData', modLineChartData)
+      const datasets = modLineChartData.map(function(item,index){return(
+         {
+          data: item,
+            fill: false,
+            showLine: false,
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgb(75, 192, 192)',
+           pointRadius: 15,
+           pointStyle: 'rectRounded'
+}
+      )}
+      )
+      return datasets
+    }
+    
+
+    
+
+
+
 
 export class Scatterplot extends React.Component{
   constructor(props){
     super(props);
     this.state={
-          labels: [],
-          datasets: [
-            {label:'homework',
-              data:['clean room', 'clean room', 'clean room', 'clean room'],
-            fill: false,
-            showLine: false,
-            borderColor: 'rgb(75, 192, 192)',
-            backgroundColor: 'rgb(75, 192, 192)'},
-
-            {label:'dished',
-            data:['do homework', 'do homework', '', 'do homework'],
-            fill: false,
-            showLine: false,
-            borderColor: 'rgb(75, 192, 192)',
-            backgroundColor: 'rgb(75, 192, 192)'}
-      ] ,
+          datasets: [],
             xAxes: [{
+              gridLines:{
+                offsetGridLines:true,
+                drawBorder:false
+              },
               type:'category',
-              labels:['alanna','bailey','was','here'],
+              labels:[],
               display: true,
               scaleLabel: {
                 display: true,
-                labelString: 'not updates'
+                labelString: ''
               }
             }]
             ,
             yAxes: [{
+              gridLines:{
+                offsetGridLines:true,
+                drawBorder:false
+              },
               type: 'category',
               position: 'left',
-              labels: ['please', 'god', 'work'],
+              labels: [],
               display: true,
               scaleLabel: {
                 display: true,
@@ -55,13 +105,16 @@ export class Scatterplot extends React.Component{
   }
     
   
-  setBigState(startDate, stopDate){
-
-      const habitLabels = []
-      this.props.habits.map(function(el){
+  setBigState(startDate, stopDate, habits, ){
+      this.setState({
+        datasets: []
+      })
+      console.log(this.props.dailyLog)
+      const habitLabels = [];
+      (habits ||this.props.habits).map(function(el){
         habitLabels.push(el.title)})
 
-        var dateArray = new Array();
+        var dateArray = [];
         console.log(this.props.startDate, 'start', this.props.stopDate, 'stop')
         var currentDate = moment(startDate || this.props.startDate);
         console.log(currentDate, 'current date')
@@ -70,9 +123,10 @@ export class Scatterplot extends React.Component{
             dateArray.push( moment(currentDate).format('MMMM D Y') )
             currentDate = moment(currentDate).add(1, 'days');
         }
-        console.log("setBigState ran", dateArray, habitLabels)
+        const datasets = normalizeData(startDate || this.props.startDate, stopDate || this.props.stopDate, habitLabels, this.props.dailyLog)
+        console.log("setBigState ran", dateArray, habitLabels, "these are the datasets", datasets)
         this.setState({ 
-          datasets:[],
+          datasets:datasets,
           labels: dateArray,
           yAxes:
             [{
@@ -81,6 +135,7 @@ export class Scatterplot extends React.Component{
               labels: habitLabels,
               display: true,
               scaleLabel: {
+                padding:10,
                 display: true,
                 labelString: 'Habits',
                 fontSize:24
@@ -93,64 +148,38 @@ export class Scatterplot extends React.Component{
               labels:dateArray,
               display: true,
               scaleLabel: {
+                 padding:10,
                 display: true,
                 labelString: 'Dates',
                 fontSize:24
               }
             }]})
-    }  
-
-  // 
-generateDataPoints(){
-  console.log('generateDataPoints ran')
-      let dataSetArray=[];
-      let habitLabels=this.props.habits;
-      let dateArray=this.state.labels;
-      let dataSet={};
-      for(let i=0; i<habitLabels.length; i++){
-          console.log('dataset', dataSet);
-        let currentHabit=habitLabels[i];
-        let dataSet={data:[],
-          fill: false,
-          showLine: false,
-          borderColor: 'rgb(75, 192, 192)',
-          backgroundColor: 'rgb(75, 192, 192)'}
-          for (let i=0; i<dateArray.length; i++){
-            let currentLoopDate=dateArray[i];
-            let currentlog=this.props.dailyLog.filter({date: currentLoopDate});
-            if (currentlog.log.includes({habit:currentHabit, complete:true})){
-              dataSet.data.push(currentHabit)
-            }
-            else {
-              dataSet.data.push('')
-            }
-          
-        dataSetArray.push(dataSet);
-}
       }
-      return this.setState({datasets:dataSetArray})
-    }
+       
+    
+  
+
 
  componentWillMount(nextProps, nextState){
 
-        this.setBigState();
-        this.generateDataPoints();
+        // this.setBigState();
 
   }
   componentWillUpdate(nextProps, nextState){
-    if (this.props.startDate !== nextProps.startDate || this.props.stopDate !==nextProps.stopDate){
-    this.setBigState(nextProps.startDate, nextProps.stopDate);}
-
+    if (this.props.startDate !== nextProps.startDate || this.props.stopDate !==nextProps.stopDate || this.props.habits !== nextProps.habits || this.props.dailyLog !==nextProps.dailyLog){
+    this.setBigState(nextProps.startDate, nextProps.stopDate, nextProps.habits, nextProps.dailyLog);}
   }
   
   render(){
-
     console.log(this.state)
+
     return (
       <div className='col-sm-10'>
         <Line  responsive='true' data={{labels: [this.state.labels],
             datasets:this.state.datasets}} 
           options={{
+          tooltips: {enabled: false},
+      hover: {mode: null},
             height:200,
             width: 200,
             responsive: true,

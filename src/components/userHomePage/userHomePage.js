@@ -66,6 +66,8 @@ componentDidMount(){
 	this.props.dispatch(fetchUser())
 }
 
+
+
     render(){
 		return(
 			<div className="homepage">
@@ -94,6 +96,7 @@ const mapStateToProps = state => {
     
     return {
         date: state.selectedDate
+        
     };
 }
 

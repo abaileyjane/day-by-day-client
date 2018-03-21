@@ -86,9 +86,10 @@ export const fetchUserSuccess = user => ({
 });
 
 export const saveUserInfo = (userHabits, userDailyLog) => dispatch => {
+
      let token = localStorage.getItem(ACCESS_TOKEN_KEY);
   let user1 = auth.client.userInfo(token, function(err, user) { 
-    console.log(user, 'SAVE USER RAN')
+    console.log(user, 'SAVE USER RAN', 'USERDAILYLOG', userDailyLog)
     let authUserId = user.sub;
     fetch(`${API_BASE_URL}/users`, {
          method: 'POST',

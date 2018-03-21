@@ -37,16 +37,31 @@ export function HabitChecklistForm (props){
 							complete: entry.complete
 							})
 				})
+
 			
 			console.log(setLog, 'setlog');
-			props.dispatch(setDayLog(props.date, setLog));
-				props.dispatch(saveUserInfo(props.habits, props.dailyLog))
-	}
+			const updatedDailyLog = props.dailyLog.map(function(item, index){
+				if(item.date === props.date){
+					return ({date:props.date,
+				log: setLog})
+				}
+				else{
+					return item
+				}
+			})
+			console.log('updatedDailyLog', updatedDailyLog)
+			props.dispatch(saveUserInfo(props.habits, updatedDailyLog));
+			}
+
+// const pullrequest = function(){
+// 	console.log('pullrequest function ran', props.dailyLog)
+
+// 				props.dispatch(saveUserInfo(props.habits, props.dailyLog))
+// }
 
 
-console.log(props)
 		return(
-			<form id="daily-habit-checklist" onSubmit={handleSubmit} className="form-horizontal">
+			<form id="daily-habit-checklist" onSubmit={e=>handleSubmit(e)} className="form-horizontal">
 				<FormGroup
 					controlId="daily-habit-checklist">
 					
