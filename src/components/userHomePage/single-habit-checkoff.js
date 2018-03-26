@@ -16,12 +16,17 @@ export  class  Habit extends React.Component{
 		console.log('button clicked')
 		this.props.handleClick(this.props.habit)
 	}
-	handleChange(event){
+	handleChange(event, callback){
 		event.preventDefault();
-		console.log('handlechange ran', this.props.habit, this.props)
+		console.log('handlechange ran', this.props.habit, this.props.checked)
 		this.props.dispatch(changeChecked(this.props.habit, this.props.checked))
-
+		
 	}
+
+	update(){
+		this.forceUpdate();
+	}
+
 
 
 	//make component state, set to false, on cick, set state to true
@@ -29,7 +34,7 @@ export  class  Habit extends React.Component{
 	return (
 
 		<div className="checklist-radio form-inline row text-left">
-			<Checkbox className="checkBox input-lg"  onChange={this.handleChange}  >
+			<Checkbox className="checkBox input-lg"  onChange={e=>this.handleChange(e,this.update)}  >
 				{this.props.habit}
 			</Checkbox>
 			<Button onClick={this.handleClick}  className="btn-xs btn-secondary">Delete</Button>
