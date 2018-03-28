@@ -11,14 +11,7 @@ import {removeHabit, setDayLog, saveUserInfo} from '../../actions'
 
 export function HabitChecklistForm (props){
 	const habits=props.habits;
-	function compare(a,b) {
-  			if (a.title < b.title)
-    			return -1;
-  			if (a.title > b.title)
-    		return 1;
-  			return 0;
-			}
-	habits.sort(compare);
+	
 	const habitButtons = habits.map((entry, index)=>{
 
 			return <Habit key={index} habit={entry.title} handleClick={e=>props.dispatch(removeHabit(e))} checked={entry.complete} />
@@ -30,16 +23,13 @@ export function HabitChecklistForm (props){
 	const handleSubmit = function(e){
 			e.preventDefault();
 			let setLog = [];
-			console.log('this ran and the current props.habits are', props.habits)
 			props.habits.map((entry, index)=>{
-				console.log(entry)
 				setLog.push( {habit : (entry.title),
 							complete: entry.complete
 							})
 				})
 
 			
-			console.log(setLog, 'setlog');
 			const updatedDailyLog = props.dailyLog.map(function(item, index){
 				if(item.date === props.date){
 					return ({date:props.date,
@@ -49,15 +39,8 @@ export function HabitChecklistForm (props){
 					return item
 				}
 			})
-			console.log('updatedDailyLog', updatedDailyLog)
 			props.dispatch(saveUserInfo(props.habits, updatedDailyLog));
 			}
-
-// const pullrequest = function(){
-// 	console.log('pullrequest function ran', props.dailyLog)
-
-// 				props.dispatch(saveUserInfo(props.habits, props.dailyLog))
-// }
 
 
 		return(

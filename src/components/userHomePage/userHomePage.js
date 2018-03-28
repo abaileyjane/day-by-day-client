@@ -4,10 +4,9 @@ import NavBar from '../navbar.js';
 import AddNewHabitForm from './add-new-habit-form.js';
 import HabitChecklistForm from './habit-checklist-form.js'
 import {Date} from './date-picker.js'
-import UserSignupForm from '../landingPage/user-registration.js'
 import '../../bootstrap.css'
 import {addHabit, setDayLog, addLogDate, fetchUser} from '../../actions'
-import {login, logout, isLoggedIn, getAccessToken} from '../../auth';
+import {login, logout, isLoggedIn} from '../../auth';
 import Footer from '../footer.js'
 import '../../one-page-wonder.css'
 

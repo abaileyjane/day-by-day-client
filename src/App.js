@@ -21,7 +21,7 @@ export class App extends React.Component {
             <div>
         <NavBar  />
 
-        <Route path="/landingpage" render={(props) => <LandingPage {...props} />} />
+        <Route path="/" exact render={(props) => <LandingPage {...props} />} />
         <Route path="/homePage" render={(props) => <UserHomePage  {...props} />} />
         <Route path="/charts" render={(props) => <ChartsPage  {...props} />} />
         <Route path="/callback" render={(props) => {

@@ -1,4 +1,6 @@
-import {ADD_HABIT, addHabit, ADD_LOG_DATE, addLogDate, SET_DAY_LOG, setDayLog, REMOVE_HABIT, removeHabit, CHANGE_CHECKED, changeChecked, fetchUser, FETCH_USER_SUCCESS, fetchUserSuccess, saveUserInfo, SAVE_USER_INFO_SUCCESS, saveUserInfoSuccess } from './index.js';
+
+
+import {ADD_HABIT,  addHabit, SET_DAY_LOG, setDayLog, REMOVE_HABIT, removeHabit, CHANGE_CHECKED, changeChecked, fetchUser, FETCH_USER_SUCCESS, fetchUserSuccess, saveUserInfo, SAVE_USER_INFO_SUCCESS, saveUserInfoSuccess } from './index.js';
 
 describe('addHabit', () =>{
 	it('Should return the action', () => {
@@ -9,14 +11,7 @@ describe('addHabit', () =>{
     });
 })
 
-describe ('addLogDate', () =>{
-	it('Should return the action', () => {
-	        const date = 'date';
-	        const action = addLogDate(date);
-	        expect(action.type).toEqual(ADD_LIST);
-	        expect(action.date).toEqual(date);
-	    });
-})
+
 
 
 describe('setDayLog', () =>{
@@ -52,20 +47,25 @@ describe('changeChecked', () =>{
 	it('Should return the action', () => {
         const title = 'habit';
         const complete = 'true'
-        const action = addHabit(title, complete);
+        const action = changeChecked(title, complete);
         expect(action.type).toEqual(CHANGE_CHECKED);
         expect(action.title).toEqual(title);
     });
 })
 
 describe('fetchUser', () =>{
+	beforeAll(() => {
+    const ls = require("../auth-localStorage.js");
+    ls.setLocalStorage();
+});
 	it('should dispatch fetchUserSuccess', () =>{
 		const user = {
 			dailyLog:[],
-			habits :[]
+			habits :[],
+			userId:""
 		}
 
-		global.fetch = jest.fn().mockImplementation(() = >
+		global.fetch = jest.fn().mockImplementation(() =>
 			Promise.resolve({
 				ok: true,
 				json(){

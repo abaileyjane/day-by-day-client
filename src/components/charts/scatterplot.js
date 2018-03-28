@@ -105,7 +105,7 @@ export class Scatterplot extends React.Component{
   }
     
   
-  setBigState(startDate, stopDate, habits, ){
+  setBigState(startDate, stopDate, habits, callback){
       this.setState({
         datasets: []
       })
@@ -154,9 +154,12 @@ export class Scatterplot extends React.Component{
                 fontSize:24
               }
             }]})
+        console.log(this.state.datasets, 'most current datasets')
       }
        
-    
+  update(){
+    this.forceUpdate()
+  }  
   
 
 
@@ -167,7 +170,8 @@ export class Scatterplot extends React.Component{
   }
   componentWillUpdate(nextProps, nextState){
     if (this.props.startDate !== nextProps.startDate || this.props.stopDate !==nextProps.stopDate || this.props.habits !== nextProps.habits || this.props.dailyLog !==nextProps.dailyLog){
-    this.setBigState(nextProps.startDate, nextProps.stopDate, nextProps.habits, nextProps.dailyLog);}
+    this.setBigState(nextProps.startDate, nextProps.stopDate, nextProps.habits, nextProps.dailyLog, this.update);
+    this.forceUpdate()}
   }
   
   render(){

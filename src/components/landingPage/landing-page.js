@@ -10,7 +10,6 @@ import Footer from '../footer.js';
 
 
 export function LandingPage(props){
-console.log(props)
 	return(
 		<div className="landingpage">
 			<header className="masthead text-center text-white">

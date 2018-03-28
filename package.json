@@ -8,6 +8,7 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "grunt-cli": "^1.2.0",
+    "jsonwebtoken": "^8.2.0",
     "jwt-decode": "^2.2.0",
     "moment": "^2.21.0",
     "package": "^1.0.1",

@@ -20,7 +20,7 @@ const initialState = {
 	selectedDate: moment().format('MMMM D Y'),
 	stopDate: moment().format('MMMM D Y'),
 	startDate:moment().subtract(30, 'days').format('MMMM D Y'),
-     habits:[{title:'wash dishes',complete:false},{title:'Clean Room',complete:false},{title: 'do homework', complete:false},{title:'go shopping',complete:false}],
+     habits:[{title:'Clean Room',complete:false},{title: 'do homework', complete:false},{title:'go shopping',complete:false}],
      dailyLog: originalLogs
 }
 
@@ -72,49 +72,22 @@ const Reducer = (state=initialState, action) =>{
 			 habits: newHabitList
 			})
 		case 'CHANGE_CHECKED':
-
-		function compare(a,b) {
-  			if (a.title < b.title)
-    			return -1;
-  			if (a.title > b.title)
-    		return 1;
-  			return 0;
-			}
-
-
-			const habitToChange = state.habits.filter(function(el){
-
-				return el.title===action.title
-			})
-			console.log('checked change', action.complete)
-			if( action.complete=== true){
-				console.log('ITS TRUE, IT WAS CHECKED')
-				const arrayWithoutChangedHabit = state.habits.filter(function(el){
-					return el.title !== action.title
-				})
-				arrayWithoutChangedHabit.push(
-						{title: action.title,
-							complete: false})
-				arrayWithoutChangedHabit.sort(compare)
-				return Object.assign({}, state, {
-					habits: arrayWithoutChangedHabit,
-						
-				})
-			}
-				
-			else {
-					const arrayWithoutChangedHabit = state.habits.filter(function(el){
-					return el.title !== action.title
-					})
-					arrayWithoutChangedHabit.push(
-						{title: action.title,
-							complete: true})
-					arrayWithoutChangedHabit.sort(compare)
-					return Object.assign({}, state, {
-					habits: arrayWithoutChangedHabit
-				})
+		console.log('after habits', state.habits)
+			const revisedHabits = state.habits.map(function(item){
+				if(action.title === item.title){
+					return {title:item.title, complete: !item.complete}
 				}
-			console.log('after habits', state.habits)
+				else {
+					return item
+				}
+			})
+			return Object.assign({}, state, {
+					habits: revisedHabits,
+				})
+
+			
+			
+
 		case 'FETCH_USER_SUCCESS': 	
 			return Object.assign({}, state, {
 				habits: action.user.habits,

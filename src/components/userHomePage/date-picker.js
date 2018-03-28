@@ -10,9 +10,7 @@ import moment from 'moment'
 
 export function Date(props){
 	const setDate=function(date){
-		console.log(date);
 		const formattedDate= moment(date).format('MMMM D Y');
-		console.log(formattedDate)
 		props.setDate(formattedDate)		
 	}
 	return  (

@@ -25,12 +25,10 @@ export default class AddNewHabitForm extends React.Component {
 
   handleChange(e) {
     this.setState({ value: e.target.value });
-    console.log(this.state.value)
   }
 
   handleSubmit(e){
     e.preventDefault();
-    console.log(this.state.value);
     this.props.addHabit(this.state.value);
     this.setState({value: ""})
   }
