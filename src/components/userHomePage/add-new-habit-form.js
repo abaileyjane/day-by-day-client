@@ -3,21 +3,23 @@ import {FormControl, FormGroup, ControlLabel, Button} from 'react-bootstrap';
  
 import '../../bootstrap.css'
 
-export class AddNewHabitForm extends React.Component {
+export default class AddNewHabitForm extends React.Component {
   constructor(props, context) {
     super(props, context);
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
       value: ''
     };
   }
 
+
   getValidationState() {
     const length = this.state.value.length;
+  
     if (length > 1) return 'success';
-    else if (length === 0) return 'error';
     return null;
   }
 
@@ -25,14 +27,20 @@ export class AddNewHabitForm extends React.Component {
     this.setState({ value: e.target.value });
   }
 
+  handleSubmit(e){
+    e.preventDefault();
+    this.props.addHabit(this.state.value);
+    this.setState({value: ""})
+  }
+
   render() {
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <FormGroup
           controlId="newHabitForm"
           validationState={this.getValidationState()}
         >
-          <ControlLabel>Track New Habit</ControlLabel>
+          <ControlLabel>New Habit</ControlLabel>
           <FormControl
             type="text"
             value={this.state.value}
@@ -40,7 +48,8 @@ export class AddNewHabitForm extends React.Component {
             onChange={this.handleChange}
           />
           <FormControl.Feedback />
-          <Button bsStyle="primary" bsSize="large" >
+          {''}
+          <Button type="submit" bsStyle="primary" className='btn-md btn-secondary addHabitButton' >
             Start Tracking
           </Button>
         </FormGroup>
