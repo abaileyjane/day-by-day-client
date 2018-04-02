@@ -1,6 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link, Redirect} from 'react-router-dom';
+import {login} from '../../auth';
+
 
 
 
@@ -20,13 +22,13 @@ export function LandingPage(props){
           				<a href="#information" className="btn btn-primary btn-xl rounded-pill mt-5">Learn More</a>
         			</div>
       			</div>
-		      <div class="bg-circle-1 bg-circle">
+		      <div className="bg-circle-1 bg-circle">
 		      </div>
-		      <div class="bg-circle-2 bg-circle">
+		      <div className="bg-circle-2 bg-circle">
 		      </div>
-		      <div class="bg-circle-3 bg-circle">
+		      <div className="bg-circle-3 bg-circle">
 		      </div>
-		      <div class="bg-circle-4 bg-circle">
+		      <div className="bg-circle-4 bg-circle">
 		      </div>
 		    </header>
 		    <section id="information">
@@ -82,6 +84,14 @@ export function LandingPage(props){
 		          </div>
 		        </div>
 		      </div>
+		    </section>
+		    <section className="text-center">
+      			<div className="masthead-content">
+        			<div className="container signupContainer">
+          				<h2 className="masthead-subheading mb-0">Ready to start tracking?</h2>
+          				<button onClick={()=>login()} className="btn btn-primary btn-xl rounded-pill mt-5">Sign Up</button>
+        			</div>
+      			</div>
 		    </section>
     		<Footer />
 		</div>

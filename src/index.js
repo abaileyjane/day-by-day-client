@@ -4,8 +4,6 @@ import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import App from './App';
 import store from './store';
-import './index.css';
-import {makeMainRoutes} from './routes'
 import './one-page-wonder.css'
 
 

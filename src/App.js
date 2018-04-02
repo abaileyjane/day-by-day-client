@@ -12,30 +12,22 @@ import NavBar from './components/navbar.js';
 
 
 export class App extends React.Component {
-
-
-  
-
     render(){
         return (
             <div>
-        <NavBar  />
-
-        <Route path="/" exact render={(props) => <LandingPage {...props} />} />
-        <Route path="/homePage" render={(props) => <UserHomePage  {...props} />} />
-        <Route path="/charts" render={(props) => <ChartsPage  {...props} />} />
-        <Route path="/callback" render={(props) => {
-          return <Callback {...props} /> 
-
-        }}/>
-      </div>
-        
+                <NavBar  />
+                <Route path="/" exact render={(props) => <LandingPage {...props} />} />
+                <Route path="/homePage" render={(props) => <UserHomePage  {...props} />} />
+                <Route path="/charts" render={(props) => <ChartsPage  {...props} />} />
+                <Route path="/callback" render={(props) => {
+                  return <Callback {...props} /> 
+                }}/>      
+            </div>
         );
     }
 }
 
-const mapStateToProps = state => ({
-    
+const mapStateToProps = state => ({   
 });
 
 export default withRouter(connect(mapStateToProps)(App));

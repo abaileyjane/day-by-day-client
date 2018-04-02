@@ -4,23 +4,23 @@ import {Line} from 'react-chartjs-2';
 import moment from 'moment';
 import '../../one-page-wonder.css'
 
-
 var LineChart = require( 'react-chartjs').Line;
 
-
-    function normalizeData(beginDate, endDate, fieldsTracked, dailyLog) {
-      console.log('normalizeData ran', fieldsTracked)
-      const withinDate = (date) => (new Date(date) >= new Date (beginDate) && new Date (date) <=  new Date (endDate));
-      
-      const filterHabits = 
-        (log, names) => log.reduce((acc, next) => {
-             (next.complete && names.includes(next.habit)) ?
-               acc.push(next.habit) :
-               acc.push(" ");
-             return acc;
-          }, []);
-
-      const habitsOfInterest = dailyLog.reduce((acc, next) => {
+//This function takes the dailylogs stored with the user and transforms them into the datasets needed by the Line chart
+function normalizeData(beginDate, endDate, fieldsTracked, dailyLog) {
+  console.log('normalizeData ran', fieldsTracked)
+  const withinDate = (date) => (new Date(date) >= new Date (beginDate) && new Date (date) <=  new Date (endDate));
+  
+  //filters to include only habits that were checked completed, return a blank string if they were not
+  const filterHabits = 
+    (log, names) => log.reduce((acc, next) => {
+      (next.complete && names.includes(next.habit)) ?
+        acc.push(next.habit) :
+        acc.push(" ");
+        return acc;
+      }, []);
+  //filters to include only current habits being tracked    
+  const habitsOfInterest = dailyLog.reduce((acc, next) => {
         if (withinDate(next.date)) {
            acc.push(filterHabits(next.log, fieldsTracked));
         } 
@@ -28,37 +28,33 @@ var LineChart = require( 'react-chartjs').Line;
         return acc;
       }, []);
 
-     
-      const zipp = rows=>rows[0].map((_,c)=>rows.map(row=>row[c]));
+  //orders filtered data  
+  const zipp = rows=>rows[0].map((_,c)=>rows.map(row=>row[c]));
 
-      console.log(habitsOfInterest, "habits of habitsOfInterest")
-      const lineChartData = zipp(habitsOfInterest);
-      console.log(lineChartData, 'lineChartData');
-      let modLineChartData = lineChartData.map(function(item){
-        item.map(function(item){
-             if(item===undefined){
-                return ""
-              }
-              else {return item}
-        }) 
-        return item
-        }
-      ) 
-      console.log('modLineChartData', modLineChartData)
-      const datasets = modLineChartData.map(function(item,index){return(
-         {
-          data: item,
-            fill: false,
-            showLine: false,
-            borderColor: 'rgb(75, 192, 192)',
-            backgroundColor: 'rgb(75, 192, 192)',
-           pointRadius: 15,
-           pointStyle: 'rectRounded'
-}
-      )}
-      )
-      return datasets
+  const lineChartData = zipp(habitsOfInterest);
+  let modLineChartData = lineChartData.map(function(item){
+    item.map(function(item){
+         if(item===undefined){
+            return ""
+          }
+          else {return item}
+    }) 
+    return item
     }
+  ) 
+  const datasets = modLineChartData.map(function(item,index){return(
+    {
+      data: item,
+        fill: false,
+        showLine: false,
+        borderColor: 'rgb(75, 192, 192)',
+        backgroundColor: 'rgb(75, 192, 192)',
+        pointRadius: 15,
+        pointStyle: 'rectRounded'
+    }     
+  )})
+  return datasets
+}
     
 
     
@@ -161,13 +157,6 @@ export class Scatterplot extends React.Component{
     this.forceUpdate()
   }  
   
-
-
- componentWillMount(nextProps, nextState){
-
-        // this.setBigState();
-
-  }
   componentWillUpdate(nextProps, nextState){
     if (this.props.startDate !== nextProps.startDate || this.props.stopDate !==nextProps.stopDate || this.props.habits !== nextProps.habits || this.props.dailyLog !==nextProps.dailyLog){
     this.setBigState(nextProps.startDate, nextProps.stopDate, nextProps.habits, nextProps.dailyLog, this.update);
@@ -183,7 +172,7 @@ export class Scatterplot extends React.Component{
             datasets:this.state.datasets}} 
           options={{
           tooltips: {enabled: false},
-      hover: {mode: null},
+          hover: {mode: null},
             height:200,
             width: 200,
             responsive: true,

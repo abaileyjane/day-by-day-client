@@ -243,8 +243,10 @@ header.masthead .bg-circle-4 {
     break-inside: avoid-column;
 
 }
-.checklist-columns{
-
+.signupContainer{
+  border-top:dashed black 2px;
+  margin-top: 40px;
+  padding-top:20px;
 
 }
 
