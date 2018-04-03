@@ -27,7 +27,7 @@ export  class ScatterplotArea extends React.Component{
 						<div className = 'col-sm-3'>
 						</div>
 						<div className='col-sm-3'>
-							<Date  placeholder={this.props.startDate} label="Start Date" setDate={e=> this.props.dispatch(setStartDate(e))} />
+							<Date  placeholder='select a date' label="Start Date" setDate={e=> this.props.dispatch(setStartDate(e))} />
 						</div>
 						<div className="col-sm-3">
 							<Date placeholder={this.props.stopDate} label="End Date" setDate={e=> this.props.dispatch(setStopDate(e))} />

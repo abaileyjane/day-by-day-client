@@ -19,7 +19,7 @@ const originalLogs = generateBlankLogs()
 const initialState = {
 	selectedDate: moment().format('MMMM D Y'),
 	stopDate: moment().format('MMMM D Y'),
-	startDate:moment().subtract(30, 'days').format('MMMM D Y'),
+	startDate:'',
      habits:[{title:'Clean Room',complete:false},{title: 'do homework', complete:false},{title:'go shopping',complete:false}],
      dailyLog: originalLogs
 }

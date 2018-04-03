@@ -93,6 +93,7 @@ componentDidMount() {
 mouseOverHandler(d, e) {
   console.log('mouse over', this.state.showToolTip)
     this.setState({
+      displayPlot:false,
       showToolTip: true,
       top: `${e.screenY - 10}px`,
       left: `${e.screenX + 10}px`,
