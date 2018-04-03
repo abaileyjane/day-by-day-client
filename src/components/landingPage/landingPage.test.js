@@ -8,4 +8,6 @@ describe('<LandingPage />', ()=>{
 	it('Renders without crashing', () => {
     	shallow(<LandingPage />);
 	});
+
+
 })

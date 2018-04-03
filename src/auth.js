@@ -31,7 +31,7 @@ export function logout() {
   clearIdToken();
   clearAccessToken();
   history.replace('/landingPage');
-  window.location.href = "/landingPage";
+  window.location.href = "/";
 
 }
 

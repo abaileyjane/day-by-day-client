@@ -12,4 +12,13 @@ describe('<Navbar />', ()=>{
 	it('Renders without crashing', () => {
     	shallow(<Navbar />);
 	});
+
+	it('should simulate click',()=>{
+		const callback = jest.fn();
+		const wrapper=shallow(<Navbar onClick={callback} />)
+		expect(wrapper.find('button')).to.have.length(1)
+	})
+	
+
+
 })

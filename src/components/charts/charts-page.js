@@ -23,7 +23,7 @@ return (<div>
 	<header className="masthead text-center homepage">
       	<div className="masthead-content-auth">
         	<div className="container">
-          		<h1 className="masthead-heading mb-0">My Progress</h1>
+          		<h1 className="masthead-heading mb-0 chartheading">My Progress</h1>
           		<h2 className="masthead-subheading mb-0"></h2>
           		<div className="chart-container">
 					<div className="ChartsPage">
