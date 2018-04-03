@@ -32,15 +32,15 @@ export function LandingPage(props){
 		      </div>
 		    </header>
 		    <section id="information">
-		      <div class="container">
-		        <div class="row align-items-center">
-		          <div class="col-lg-6 order-lg-2">
-		            <div class="p-5">
-		              <img className="img-fluid rounded-circle" src={require('../../img/habits-signpost.jpg')} alt="" />
+		      <div className="container">
+		        <div className="row align-items-center">
+		          <div className="col-sm-6 order-lg-2">
+		            <div className="p-5">
+		              <img className="img-fluid rounded-circle" src={require('../../img/habits-signpost.jpg')} alt="stock image of signposts" />
 		            </div>
 		          </div>
 
-		          <div className="col-lg-5 order-lg-1">
+		          <div className="col-sm-5 order-lg-1">
 		            <div className="p-5 text">
 		              <h2 className="display-4">Make a change and make it stick</h2>
 		              <p>Forming a habit is hard. You start off strong, but soon you're slacking. Maintain your motivation with Day by Day, the habit forming app that tracks your progress towards solidifying a new habit.</p>
@@ -52,15 +52,15 @@ export function LandingPage(props){
 		    <section>
 		      <div className="container">
 		        <div className="row align-items-center">
-		          <div class="col-lg-6">
+		          <div class="col-sm-6">
 		            <div class="p-5 text">
 		              <h2 class="display-4">Celebrate you streaks</h2>
 		              <p>Day by Day displays clearly displays a calender showing which habits you completed on which days. Watch your streaks grow as your successes add up!</p>
 		            </div>
 		          </div>
-		          <div className="col-lg-6">
+		          <div className="col-sm-6">
 		            <div className="p-5">
-		              <img className="img-fluid rounded-circle" src={require('../../img/02.jpg')} alt="" />
+		              <img className="img-fluid rounded-circle" src={require('../../img/02.jpg')} alt="screenshot of chart" />
 		            </div>
 		          </div>
 		          
@@ -70,13 +70,13 @@ export function LandingPage(props){
 		    <section>
 		      <div className="container">
 		        <div className="row align-items-center">
-		          <div class="col-lg-6 order-lg-2">
+		          <div class="col-sm-6 order-lg-2">
 		            <div class="p-5">
-		              <img className="img-fluid rounded-circle" src={require('../../img/logScreenShot.PNG')} alt="" />
+		              <img className="img-fluid rounded-circle" src={require('../../img/logScreenShot.PNG')} alt="screenshot of daily log" />
 		            </div>
 		          </div>
 
-		          <div className="col-lg-5 order-lg-1">
+		          <div className="col-sm-5 order-lg-1">
 		            <div className="p-5 text">
 		              <h2 className="display-4">Success in simplicity</h2>
 		              <p>It is easy to record your daily successes. Day by Day saves the habits you're trying to form. Simply log on each day and check off the tasks you've completed. You'll love the satisfaction of a fully checked log!</p>

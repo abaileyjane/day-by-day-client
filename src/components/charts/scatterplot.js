@@ -1,196 +1,223 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Line} from 'react-chartjs-2';
+import {ScatterplotChart} from 'react-easy-chart';
 import moment from 'moment';
+
 import '../../one-page-wonder.css'
-
-var LineChart = require( 'react-chartjs').Line;
-
-//This function takes the dailylogs stored with the user and transforms them into the datasets needed by the Line chart
-function normalizeData(beginDate, endDate, fieldsTracked, dailyLog) {
-  console.log('normalizeData ran', fieldsTracked)
-  const withinDate = (date) => (new Date(date) >= new Date (beginDate) && new Date (date) <=  new Date (endDate));
-  
-  //filters to include only habits that were checked completed, return a blank string if they were not
-  const filterHabits = 
-    (log, names) => log.reduce((acc, next) => {
-      (next.complete && names.includes(next.habit)) ?
-        acc.push(next.habit) :
-        acc.push(" ");
-        return acc;
-      }, []);
-  //filters to include only current habits being tracked    
-  const habitsOfInterest = dailyLog.reduce((acc, next) => {
-        if (withinDate(next.date)) {
-           acc.push(filterHabits(next.log, fieldsTracked));
-        } 
-        else {}
-        return acc;
-      }, []);
-
-  //orders filtered data  
-  const zipp = rows=>rows[0].map((_,c)=>rows.map(row=>row[c]));
-
-  const lineChartData = zipp(habitsOfInterest);
-  let modLineChartData = lineChartData.map(function(item){
-    item.map(function(item){
-         if(item===undefined){
-            return ""
-          }
-          else {return item}
-    }) 
-    return item
-    }
-  ) 
-  const datasets = modLineChartData.map(function(item,index){return(
-    {
-      data: item,
-        fill: false,
-        showLine: false,
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgb(75, 192, 192)',
-        pointRadius: 15,
-        pointStyle: 'rectRounded'
-    }     
-  )})
-  return datasets
-}
-    
-
-    
-
-
-
 
 export class Scatterplot extends React.Component{
   constructor(props){
+     var firstDateArray = [];
+      var currentDate =moment().subtract(30, 'days').format("D-MMM-YY");
+      var stopDate = moment().format("D-MMM-YY");
+      while (currentDate <= stopDate) {
+          firstDateArray.push( moment(currentDate).format('MMMM D Y') )
+          currentDate = moment(currentDate).add(1, 'days');
+      }
     super(props);
-    this.state={
-          datasets: [],
-            xAxes: [{
-              gridLines:{
-                offsetGridLines:true,
-                drawBorder:false
-              },
-              type:'category',
-              labels:[],
-              display: true,
-              scaleLabel: {
-                display: true,
-                labelString: ''
-              }
-            }]
-            ,
-            yAxes: [{
-              gridLines:{
-                offsetGridLines:true,
-                drawBorder:false
-              },
-              type: 'category',
-              position: 'left',
-              labels: [],
-              display: true,
-              scaleLabel: {
-                display: true,
-                labelString: 'yaxis'
-              },
-              ticks: {}
-              
-            }]
+    this.state={ 
+      showToolTip:false,
+      top:'20px',
+      left:'20px',
+      type:'',
+      x:'',
+      y:'',
+      height:0,
+      width:0,
+      data:[],
+      dateRange:firstDateArray
+    }
+  this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  this.mouseOverHandler = this.mouseOverHandler.bind(this);
+  this.mouseOutHandler = this.mouseOutHandler.bind(this);
+  this.mouseMoveHandler = this.mouseMoveHandler.bind(this)
+
+  }
+
+updateWindowDimensions() {
+  this.setState({ width: (window.innerWidth*0.7), height: (window.innerHeight*0.5) });
+}
+generateData(startDate, stopDate, dailyLog) {
+  console.log('generateData ran')
+  var data=[]
+  var dateArray = [];
+  console.log(this.props.startDate, 'start', this.props.stopDate, 'stop')
+  var currentDate = moment(startDate || this.props.startDate);
+  console.log(currentDate, 'current date')
+  var stopDate = moment(stopDate || this.props.stopDate);
+  while (currentDate <= stopDate) {
+      dateArray.push( moment(currentDate).format('MMMM D Y') )
+      currentDate = moment(currentDate).add(1, 'days');
+  }
+  console.log(this.props.dailyLog, dateArray)
+  for(let i=0; i<dateArray.length; i++){
+    let today=this.props.dailyLog.filter(function(item){
+      return (item.date=== dateArray[i])
+
+    })
+    console.log(today, today[0].log, today[0].date);
+    if(today[0].log.length===0){
+       data.push({
+          type: 'three',
+          x: today[0].date,
+          y:'No Log Saved'
+        })
+    }
+    if(today[0].log.length>0){
+      today[0].log.forEach(function(element){
+        if(element.complete===true){
+          data.push({
+            type: 'one',
+            x: today[0].date,
+            y:element.habit
+          }
+        )}
+        else if(!element.complete===true){
+          data.push({
+            type: 'two',
+            x: today[0].date,
+            y:element.habit
+          }
+        )}
+      })
     }
   }
-    
-  
-  setBigState(startDate, stopDate, habits, callback){
-      this.setState({
-        datasets: []
-      })
-      console.log(this.props.dailyLog)
-      const habitLabels = [];
-      (habits ||this.props.habits).map(function(el){
-        habitLabels.push(el.title)})
+  this.setState({data: data,
+                  dateRange: dateArray})
+}
 
-        var dateArray = [];
-        console.log(this.props.startDate, 'start', this.props.stopDate, 'stop')
-        var currentDate = moment(startDate || this.props.startDate);
-        console.log(currentDate, 'current date')
-        var stopDate = moment(stopDate || this.props.stopDate);
-        while (currentDate <= stopDate) {
-            dateArray.push( moment(currentDate).format('MMMM D Y') )
-            currentDate = moment(currentDate).add(1, 'days');
-        }
-        const datasets = normalizeData(startDate || this.props.startDate, stopDate || this.props.stopDate, habitLabels, this.props.dailyLog)
-        console.log("setBigState ran", dateArray, habitLabels, "these are the datasets", datasets)
-        this.setState({ 
-          datasets:datasets,
-          labels: dateArray,
-          yAxes:
-            [{
-              type:'category',
-              ticks: {fontSize: 16, reverse:true},
-              labels: habitLabels,
-              display: true,
-              scaleLabel: {
-                padding:10,
-                display: true,
-                labelString: 'Habits',
-                fontSize:24
-              }
-            }], 
-            xAxes:
-            [{
-              type:'category',
-              ticks:{reverse:true, fontSize: 16},
-              labels:dateArray,
-              display: true,
-              scaleLabel: {
-                 padding:10,
-                display: true,
-                labelString: 'Dates',
-                fontSize:24
-              }
-            }]})
-        console.log(this.state.datasets, 'most current datasets')
-      }
-       
-  update(){
-    this.forceUpdate()
-  }  
+componentDidMount() {
+  this.updateWindowDimensions();
+  window.addEventListener('resize', this.updateWindowDimensions);
+}
+mouseOverHandler(d, e) {
+  console.log('mouse over', this.state.showToolTip)
+    this.setState({
+      showToolTip: true,
+      top: `${e.screenY - 10}px`,
+      left: `${e.screenX + 10}px`,
+      y: d.y,
+      x: d.x,
+      type:d.type});
+  }
+
+  mouseMoveHandler(e) {
+    if (this.state.showToolTip) {
+      this.setState({top: `${e.y - 10}px`, left: `${e.x + 10}px`});
+    }
+  }
+
+  mouseOutHandler() {
+    console.log('mouse out', this.state.showToolTip, this.state.x, this.state.y)
+    this.setState({showToolTip: false});
+  }
+
   
   componentWillUpdate(nextProps, nextState){
-    if (this.props.startDate !== nextProps.startDate || this.props.stopDate !==nextProps.stopDate || this.props.habits !== nextProps.habits || this.props.dailyLog !==nextProps.dailyLog){
-    this.setBigState(nextProps.startDate, nextProps.stopDate, nextProps.habits, nextProps.dailyLog, this.update);
-    this.forceUpdate()}
-  }
-  
-  render(){
-    console.log(this.state)
+    if (this.props.startDate !== nextProps.startDate || this.props.stopDate !==nextProps.stopDate || this.props.dailyLog !==nextProps.dailyLog){
+    this.generateData(nextProps.startDate, nextProps.stopDate,  nextProps.dailyLog);
+  }}
 
-    return (
-      <div className='col-sm-10'>
-        <Line  responsive='true' data={{labels: [this.state.labels],
-            datasets:this.state.datasets}} 
-          options={{
-          tooltips: {enabled: false},
-          hover: {mode: null},
-            height:200,
-            width: 200,
-            responsive: true,
-            title:{
-              display: false,
-              text: 'Habit Tracker',
-              fontSize:24
-            },
-            legend: {
-              display: false
-            },
-            scales: {xAxes:this.state.xAxes,yAxes:this.state.yAxes}
-        }}  />
-      </div>  
-    
+
+
+
+  render(){
   
-  )}
-}
+    const config=[
+     {
+      type: 'one',
+      color: '#ee0979',
+      stroke: 'blue'
+    },
+    {
+      type: 'two',
+      color: 'white',
+      stroke: 'white'
+    },
+    {
+      type: 'three',
+      color: 'black',
+      stroke: 'pink'
+    }]
+
+      if(moment(this.props.startDate).isAfter(moment(this.props.stopDate))){
+        return(
+          <div><h2>Whoops! That Start Date is AFTER your End Date!</h2></div>
+        )
+      }
+      if(this.state.showToolTip&&this.state.type==="one"){
+        return(
+          <div>
+            <div className='container dataInfo'>
+              <h5>On {this.state.x} you completed your goal to {this.state.y}.</h5>
+            </div>
+            <div className='col-sm-10'>
+             <ScatterplotChart 
+              axes 
+              margin={{left: 90, right: 10, top:10, bottom:-15}} 
+              width={this.state.width} 
+              height={this.state.height} 
+              data={this.state.data} 
+              yType='text' 
+              config={config} 
+              xType='text'
+              mouseOverHandler={this.mouseOverHandler} 
+              mouseOutHandler={this.mouseOutHandler}
+              mouseMoveHandler={this.mouseMoveHandler}
+              />
+          </div>  
+          </div>)
+      }
+       if(this.state.showToolTip&&this.state.type==="three"){
+        return(
+          <div>
+            <div className='container dataInfo'>
+              <h5>You did not log your day on {this.state.x}.</h5>
+            </div>
+            <div className='col-sm-10'>
+             <ScatterplotChart 
+              axes 
+              margin={{left: 90, right: 10, top:10, bottom:-15}} 
+              width={this.state.width} 
+              height={this.state.height} 
+              data={this.state.data} 
+              yType='text' 
+              config={config} 
+              xType='text'
+              mouseOverHandler={this.mouseOverHandler} 
+              mouseOutHandler={this.mouseOutHandler}
+              mouseMoveHandler={this.mouseMoveHandler}
+              />
+          </div>  
+          </div>)
+      }
+        return (
+          <div>
+           <div className='container dataInfo'>
+              <h5>Hover over a DataDot to show details</h5>
+            </div>
+          <div className='col-sm-10'>
+             <ScatterplotChart 
+              axes 
+              margin={{left: 90, right: 10, top:10, bottom:-15}} 
+              width={this.state.width} 
+              height={this.state.height} 
+              data={this.state.data} 
+              yType='text' 
+              config={config} 
+              xType='text'
+              mouseOverHandler={this.mouseOverHandler} 
+              mouseOutHandler={this.mouseOutHandler}
+              mouseMoveHandler={this.mouseMoveHandler}
+              />
+          </div>  
+          </div>
+          )
+      }
+    }
+      
+
+
 
 
 const mapStateToProps = (state,props) => (  

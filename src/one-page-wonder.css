@@ -164,6 +164,10 @@ header.masthead .bg-circle-4 {
   right: 35% !important;
 }
 
+.dataInfo{
+  margin:30px;
+}
+
 @media (min-width: 992px) {
   header.masthead {
     padding-top: calc(10rem + 55px) !important;
@@ -174,6 +178,9 @@ header.masthead .bg-circle-4 {
   }
   header.masthead .masthead-content .masthead-heading {
     font-size: 8rem !important;
+  }
+.chartheading{
+    margin-left:50px;
   }
   header.masthead .masthead-content .masthead-subheading {
     font-size: 4rem !important;
