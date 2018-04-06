@@ -9,5 +9,9 @@ describe('<LandingPage />', ()=>{
     	shallow(<LandingPage />);
 	});
 
-
+	it('should have a signup button and learn more button',()=>{
+		const wrapper=shallow(<LandingPage />)
+		expect(wrapper.find('.btn').length).toEqual(2)
+	})
+	
 })

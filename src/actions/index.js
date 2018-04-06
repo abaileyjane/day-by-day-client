@@ -2,7 +2,7 @@
  import {API_BASE_URL} from '../config'
  import auth0 from 'auth0-js';
 
- import {getAccessToken, getUserData} from '../auth';
+ import {getAccessToken} from '../auth';
  const ACCESS_TOKEN_KEY = 'access_token';
  const CLIENT_ID = 'w2fQsODQp6KzxbbsTcFailw5S1zc565c';
 const CLIENT_DOMAIN = 'day-by-day.auth0.com';
@@ -61,7 +61,6 @@ export const changeChecked= (title, complete) => ({
 export const fetchUser = () => dispatch => {
    let token = localStorage.getItem(ACCESS_TOKEN_KEY)
   let user1 = auth.client.userInfo(token, function(err, user) { 
-      console.log(user.sub);
        fetch(`${API_BASE_URL}/users/${user.sub}`,{
         method: 'GET',
          headers: {
@@ -87,22 +86,21 @@ export const fetchUserSuccess = user => ({
 
 export const saveUserInfo = (userHabits, userDailyLog) => dispatch => {
 
-     let token = localStorage.getItem(ACCESS_TOKEN_KEY);
+  let token = localStorage.getItem(ACCESS_TOKEN_KEY);
   let user1 = auth.client.userInfo(token, function(err, user) { 
-    console.log(user, 'SAVE USER RAN', 'USERDAILYLOG', userDailyLog)
-    let authUserId = user.sub;
-    fetch(`${API_BASE_URL}/users`, {
-         method: 'POST',
-        headers: {
-             'Authorization': `Bearer ${getAccessToken()}`, 
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: authUserId,
-            habits: userHabits,
-            dailyLog: userDailyLog,
-          })
+  let authUserId = user.sub;
+  fetch(`${API_BASE_URL}/users`, {
+       method: 'POST',
+      headers: {
+           'Authorization': `Bearer ${getAccessToken()}`, 
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: authUserId,
+          habits: userHabits,
+          dailyLog: userDailyLog,
+        })
 }).then(res=>{
 	if (!res.ok) {
             return Promise.reject(res.statusText);

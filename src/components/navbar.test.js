@@ -13,10 +13,12 @@ describe('<Navbar />', ()=>{
     	shallow(<Navbar />);
 	});
 
-	it('should simulate click',()=>{
+	it('should render login button',()=>{
 		const callback = jest.fn();
-		const wrapper=shallow(<Navbar onClick={callback} />)
-		expect(wrapper.find('button')).to.have.length(1)
+		const wrapper=shallow(<Navbar  />)
+		expect(wrapper.find('.btn-primary').length).toEqual(1);
+	
+
 	})
 	
 

@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Date from '../userHomePage/date-picker.js'
 import Scatterplot from './scatterplot.js'
-import moment from 'moment'
 import '../../one-page-wonder.css'
 import {setStartDate, setStopDate} from '../../actions'
 

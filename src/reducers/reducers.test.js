@@ -23,7 +23,7 @@ describe('Reducer', () =>{
 		expect(state).toEqual({
 			selectedDate: moment().format('MMMM D Y'),
 			stopDate: moment().format('MMMM D Y'),
-			startDate:moment().subtract(30, 'days').format('MMMM D Y'),
+			startDate:'',
 		    habits:[{title:'Clean Room',complete:false},{title: 'do homework', complete:false},{title:'go shopping',complete:false}],
 		    dailyLog: originalLogs
 		})
@@ -34,7 +34,7 @@ describe('Reducer', () =>{
         const state = Reducer(currentState, {type: '__UNKNOWN'});
         expect(state).toBe(currentState);
     });
-
+ 
 	 describe('ADDHABIT',()=>{
 	 	it('Should add a new habit', ()=>{
 	 		let state
@@ -42,7 +42,7 @@ describe('Reducer', () =>{
 	 		expect(state).toEqual({
 				selectedDate: moment().format('MMMM D Y'),
 				stopDate: moment().format('MMMM D Y'),
-				startDate:moment().subtract(30, 'days').format('MMMM D Y'),
+				startDate:'',
 			    habits:[{title:'Clean Room',complete:false},{title: 'do homework', complete:false},{title:'go shopping',complete:false},{title:'wash dishes', complete:false}],
 			    dailyLog: originalLogs
 			})
@@ -72,7 +72,7 @@ describe('Reducer', () =>{
 	 		expect(state).toEqual({
 				selectedDate: moment().format('MMMM D Y'),
 				stopDate: moment().subtract(3, 'days').format('MMMM D Y'),
-				startDate:moment().subtract(30, 'days').format('MMMM D Y'),
+				startDate:'',
 			    habits:[{title:'Clean Room',complete:false},{title: 'do homework', complete:false},{title:'go shopping',complete:false}],
 			    dailyLog: originalLogs
 			})
@@ -86,7 +86,7 @@ describe('Reducer', () =>{
 	 		expect(state).toEqual({
 				selectedDate: moment().subtract(3, 'days').format('MMMM D Y'),
 				stopDate: moment().format('MMMM D Y'),
-				startDate:moment().subtract(30, 'days').format('MMMM D Y'),
+				startDate:'',
 			    habits:[{title:'Clean Room',complete:false},{title: 'do homework', complete:false},{title:'go shopping',complete:false}],
 			    dailyLog: originalLogs
 			})
@@ -101,7 +101,7 @@ describe('Reducer', () =>{
 	 		expect(state).toEqual({
 				selectedDate: moment().format('MMMM D Y'),
 				stopDate: moment().format('MMMM D Y'),
-				startDate:moment().subtract(30, 'days').format('MMMM D Y'),
+				startDate:'',
 			    habits:[{title:'Clean Room',complete:false},{title:'go shopping',complete:false}],
 			    dailyLog: originalLogs
 			})
@@ -115,7 +115,7 @@ describe('Reducer', () =>{
 	 		expect(state).toEqual({
 				selectedDate: moment().format('MMMM D Y'),
 				stopDate: moment().format('MMMM D Y'),
-				startDate:moment().subtract(30, 'days').format('MMMM D Y'),
+				startDate:'',
 			    habits:[{title:'Clean Room',complete:true},{title: 'do homework', complete:false},{title:'go shopping',complete:false}],
 			    dailyLog: originalLogs
 			})
@@ -131,7 +131,7 @@ describe('Reducer', () =>{
 	 		expect(state).toEqual({
 				selectedDate: moment().format('MMMM D Y'),
 				stopDate: moment().format('MMMM D Y'),
-				startDate:moment().subtract(30, 'days').format('MMMM D Y'),
+				startDate:'',
 			    habits:[{title:'wash dishes', complete:false}],
 			    dailyLog: []
 			})

@@ -1,13 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Link, Redirect} from 'react-router-dom';
 import {login} from '../../auth';
 
 
 
 
 
-import NavBar from '../navbar.js';
 import Footer from '../footer.js';
 
 
@@ -36,7 +34,7 @@ export function LandingPage(props){
 		        <div className="row align-items-center">
 		          <div className="col-sm-6 order-lg-2">
 		            <div className="p-5">
-		              <img className="img-fluid rounded-circle" src={require('../../img/habits-signpost.jpg')} alt="stock image of signposts" />
+		              <img className="img-fluid rounded-circle" src={require('../../img/habits-signpost.jpg')} alt="signposts" />
 		            </div>
 		          </div>
 
@@ -52,9 +50,9 @@ export function LandingPage(props){
 		    <section>
 		      <div className="container">
 		        <div className="row align-items-center">
-		          <div class="col-sm-6">
-		            <div class="p-5 text">
-		              <h2 class="display-4">Celebrate you streaks</h2>
+		          <div className="col-sm-6">
+		            <div className="p-5 text">
+		              <h2 className="display-4">Celebrate you streaks</h2>
 		              <p>Day by Day displays clearly displays a calender showing which habits you completed on which days. Watch your streaks grow as your successes add up!</p>
 		            </div>
 		          </div>
@@ -70,8 +68,8 @@ export function LandingPage(props){
 		    <section>
 		      <div className="container">
 		        <div className="row align-items-center">
-		          <div class="col-sm-6 order-lg-2">
-		            <div class="p-5">
+		          <div className="col-sm-6 order-lg-2">
+		            <div className="p-5">
 		              <img className="img-fluid rounded-circle" src={require('../../img/logScreenShot.PNG')} alt="screenshot of daily log" />
 		            </div>
 		          </div>
@@ -89,7 +87,7 @@ export function LandingPage(props){
       			<div className="masthead-content">
         			<div className="container signupContainer">
           				<h2 className="masthead-subheading mb-0">Ready to start tracking?</h2>
-          				<button onClick={()=>login()} className="btn btn-primary btn-xl rounded-pill mt-5">Sign Up</button>
+          				<button id='signupbutton' onClick={()=>login()} className="btn btn-primary btn-xl rounded-pill mt-5">Sign Up</button>
         			</div>
       			</div>
 		    </section>

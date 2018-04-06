@@ -3,7 +3,7 @@ import moment from 'moment'
 
 
 function generateBlankLogs(){
-	var blankLogs = new Array();
+	var blankLogs = [];
   
         var currentDate = moment().subtract(90,'days');
         
@@ -58,7 +58,6 @@ const Reducer = (state=initialState, action) =>{
 					return item
 				}
 			})
-			console.log('updatedDailyLog', updatedDailyLog)
 			return Object.assign({}, state, {
 			dailyLog:updatedDailyLog
 			}
@@ -72,7 +71,6 @@ const Reducer = (state=initialState, action) =>{
 			 habits: newHabitList
 			})
 		case 'CHANGE_CHECKED':
-		console.log('after habits', state.habits)
 			const revisedHabits = state.habits.map(function(item){
 				if(action.title === item.title){
 					return {title:item.title, complete: !item.complete}
@@ -95,7 +93,6 @@ const Reducer = (state=initialState, action) =>{
 			})
 
 		case 'SAVE_USER_INFO_SUCCESS':
-				console.log('SAVE_USER_INFO_SUCCESS ran', state)
 				window.location.href = "/charts";
 
 				Object.assign({}, state, {

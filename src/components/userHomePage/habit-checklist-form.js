@@ -2,10 +2,9 @@ import React from 'react';
 
 import {connect} from 'react-redux';
 import Habit from './single-habit-checkoff.js'
-import {getAccessToken} from '../../auth';
 
-import {FormGroup,FormControl, FieldGroup, ControlLabel, Button} from 'react-bootstrap';
-import {removeHabit, setDayLog, saveUserInfo} from '../../actions'
+import {FormGroup, Button} from 'react-bootstrap';
+import {removeHabit, saveUserInfo} from '../../actions'
 
 
 

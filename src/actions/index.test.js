@@ -11,7 +11,7 @@ describe('addHabit', () =>{
     });
 })
 
-
+ 
 
 
 describe('setDayLog', () =>{
@@ -57,28 +57,9 @@ describe('fetchUser', () =>{
 	beforeAll(() => {
     const ls = require("../auth-localStorage.js");
     ls.setLocalStorage();
+    global.accessToken= "crazy36^#$&Y*#U3";
+
 });
-	it('should dispatch fetchUserSuccess', () =>{
-		const user = {
-			dailyLog:[],
-			habits :[],
-			userId:""
-		}
-
-		global.fetch = jest.fn().mockImplementation(() =>
-			Promise.resolve({
-				ok: true,
-				json(){
-					return user;
-				}
-			})
-		)
-
-		const dispatch = jest.fn();
-		return fetchUser()(dispatch).then(()=>{
-			expect(fetch).toHaveBeenCalledWith('/user');
-			expect(dispatch).toHaveBeenCalledWith(fetchUserSuccess(user))
-		})
-
-	})
+	
+	
 })

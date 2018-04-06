@@ -1,5 +1,5 @@
 import React from 'react';
-import  {Checkbox, bsSize, FormControl, Button} from 'react-bootstrap'
+import  {Checkbox, Button} from 'react-bootstrap'
 import {changeChecked} from '../../actions'
 import {connect} from 'react-redux';
 

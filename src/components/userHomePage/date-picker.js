@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 import {formatDate,parseDate,} from 'react-day-picker/moment';
-import {addLogDate} from '../../actions';
 import moment from 'moment'
 
 

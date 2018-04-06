@@ -1,12 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import NavBar from '../navbar.js';
 import AddNewHabitForm from './add-new-habit-form.js';
 import HabitChecklistForm from './habit-checklist-form.js'
 import {Date} from './date-picker.js'
 import '../../bootstrap.css'
 import {addHabit, setDayLog, addLogDate, fetchUser} from '../../actions'
-import {login, logout, isLoggedIn} from '../../auth';
+import {isLoggedIn} from '../../auth';
 import Footer from '../footer.js'
 import '../../one-page-wonder.css'
 
@@ -45,7 +44,8 @@ displayProfile() {
 								</div>
 								<div className="row col-sm-12">
 								<div className="col-sm-4"></div>
-									<div className='col-sm-4 text-center'>
+									<div className='col-sm-4 text-center' style={{left:10+'px'}}>
+
 										<h3>Ready to track a new habit?</h3>
 										<AddNewHabitForm addHabit={e=> this.props.dispatch(addHabit(e))} />
 		          					</div>

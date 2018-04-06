@@ -5,7 +5,6 @@ import {LandingPage} from './components/landingPage/landing-page.js';
 import ChartsPage from './components/charts/charts-page.js';
 import { withRouter, Route} from 'react-router-dom';
 import {Callback} from './callback';
-import{createHistory} from './history'
 import NavBar from './components/navbar.js';
 
 

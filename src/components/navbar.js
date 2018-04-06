@@ -1,7 +1,6 @@
 import React from 'react';
 import '../one-page-wonder.css'
-import {Logo} from './logo.js';
-import {Nav, Navbar, NavItem, Button} from 'react-bootstrap';
+import {Nav, Navbar, Button} from 'react-bootstrap';
 import {login, logout, isLoggedIn} from '../auth';
 
 

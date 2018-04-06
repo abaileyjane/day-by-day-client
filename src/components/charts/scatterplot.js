@@ -35,7 +35,7 @@ export class Scatterplot extends React.Component{
   }
 
 updateWindowDimensions() {
-  this.setState({ width: (window.innerWidth*0.7), height: (window.innerHeight*0.5) });
+  this.setState({ width: (window.innerWidth*0.5), height: (window.innerHeight*0.5) });
 }
 generateData(startDate, stopDate, dailyLog) {
   console.log('generateData ran')
@@ -44,18 +44,16 @@ generateData(startDate, stopDate, dailyLog) {
   console.log(this.props.startDate, 'start', this.props.stopDate, 'stop')
   var currentDate = moment(startDate || this.props.startDate);
   console.log(currentDate, 'current date')
-  var stopDate = moment(stopDate || this.props.stopDate);
+  stopDate = moment(stopDate || this.props.stopDate);
   while (currentDate <= stopDate) {
       dateArray.push( moment(currentDate).format('MMMM D Y') )
       currentDate = moment(currentDate).add(1, 'days');
   }
-  console.log(this.props.dailyLog, dateArray)
   for(let i=0; i<dateArray.length; i++){
     let today=this.props.dailyLog.filter(function(item){
       return (item.date=== dateArray[i])
 
     })
-    console.log(today, today[0].log, today[0].date);
     if(today[0].log.length===0){
        data.push({
           type: 'three',
