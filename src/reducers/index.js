@@ -1,4 +1,3 @@
-import * as actions from '../actions';
 import moment from 'moment'
 
 
@@ -95,7 +94,7 @@ const Reducer = (state=initialState, action) =>{
 		case 'SAVE_USER_INFO_SUCCESS':
 				window.location.href = "/charts";
 
-				Object.assign({}, state, {
+				return Object.assign({}, state, {
 				habits: action.user.habits,
 				dailyLog: action.user.dailyLog
 			})

@@ -60,7 +60,7 @@ export const changeChecked= (title, complete) => ({
 
 export const fetchUser = () => dispatch => {
    let token = localStorage.getItem(ACCESS_TOKEN_KEY)
-  let user1 = auth.client.userInfo(token, function(err, user) { 
+    auth.client.userInfo(token, function(err, user) { 
        fetch(`${API_BASE_URL}/users/${user.sub}`,{
         method: 'GET',
          headers: {
@@ -87,7 +87,7 @@ export const fetchUserSuccess = user => ({
 export const saveUserInfo = (userHabits, userDailyLog) => dispatch => {
 
   let token = localStorage.getItem(ACCESS_TOKEN_KEY);
-  let user1 = auth.client.userInfo(token, function(err, user) { 
+  auth.client.userInfo(token, function(err, user) { 
   let authUserId = user.sub;
   fetch(`${API_BASE_URL}/users`, {
        method: 'POST',

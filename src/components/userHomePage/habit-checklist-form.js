@@ -23,7 +23,7 @@ export function HabitChecklistForm (props){
 			e.preventDefault();
 			let setLog = [];
 			props.habits.map((entry, index)=>{
-				setLog.push( {habit : (entry.title),
+				return setLog.push( {habit : (entry.title),
 							complete: entry.complete
 							})
 				})
