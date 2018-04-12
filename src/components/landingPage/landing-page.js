@@ -58,7 +58,7 @@ export function LandingPage(props){
 		          </div>
 		          <div className="col-sm-6">
 		            <div className="p-5">
-		              <img className="img-fluid rounded-circle" src={require('../../img/02.jpg')} alt="screenshot of chart" />
+		              <img className="img-fluid rounded-circle" src={require('../../img/scatterplot.JPG')} alt="screenshot of chart" />
 		            </div>
 		          </div>
 		          
