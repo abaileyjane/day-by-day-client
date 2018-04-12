@@ -6,7 +6,7 @@ const ACCESS_TOKEN_KEY = 'access_token';
 
 const CLIENT_ID = 'w2fQsODQp6KzxbbsTcFailw5S1zc565c';
 const CLIENT_DOMAIN = 'day-by-day.auth0.com';
-const REDIRECT = 'http://localhost:3000/callback';
+const REDIRECT = 'https://day-by-day.netlify.com/callback';
 const SCOPE = 'openid';
 const AUDIENCE = 'https://day-by-day.auth0.com/userinfo';
 
